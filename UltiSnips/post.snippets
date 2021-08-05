@@ -1,4 +1,4 @@
-snippet post
+snippet post "Post header"
 ${1:Title}
 meta: date=${2:`date +'%Y-%m-%d %H:%M:%S'`}
 meta: tags=$3
@@ -8,41 +8,21 @@ $4
 </short>
 endsnippet
 
-snippet meta
+snippet meta "Post metadata"
 meta: date=${2:`date +'%Y-%m-%d %H:%M:%S'`}
 meta: tags=$3
 endsnippet
 
-snippet addr
-<a href="mailto:ams@toroid.org">ams@toroid.org</a>
-endsnippet
-
-snippet twittr
-<a href="https://twitter.com/amenonsen">@amenonsen</a>
-endsnippet
-
-snippet pimg
-meta: img=$1
-meta: alt=$2
-endsnippet
-
-snippet img
-<p>
-<%= post_img %>
-
-<p>
-
-endsnippet
-
-snippet short
+snippet short "Post summary"
 <short>
 $1
 </short>
 endsnippet
 
-snippet psumm
-<p class=p-summary property=abstract>
-
+snippet pimg "Image post"
+${1:Title}
+meta: img=$1
+meta: alt=$2
 endsnippet
 
 snippet h2
@@ -53,13 +33,26 @@ snippet h3
 <h3>$1</h3>
 endsnippet
 
-snippet exc
+snippet psumm "Abstract"
+<p class=p-summary property=abstract>
+
+endsnippet
+
+snippet img "Image"
+<p>
+<%= post_img %>
+
+<p>
+
+endsnippet
+
+snippet exc "Excerpt block"
 <pre class=excerpt>
 $1
 </pre>
 endsnippet
 
-snippet code
+snippet code "Code block"
 <pre class=code>
 $1
 </pre>
@@ -69,12 +62,20 @@ snippet a "Link"
 <a href="$1">$2</a>
 endsnippet
 
-snippet au "Link"
+snippet au "Link to selected URL"
 <a href="${VISUAL}">${1:anchor}</a>
 endsnippet
 
-snippet at "Link"
+snippet at "Link to selected text"
 
 <a href="$1">${VISUAL}</a>
 
+endsnippet
+
+snippet addr "Email link"
+<a href="mailto:ams@toroid.org">ams@toroid.org</a>
+endsnippet
+
+snippet twittr "Twitter link"
+<a href="https://twitter.com/amenonsen">@amenonsen</a>
 endsnippet
