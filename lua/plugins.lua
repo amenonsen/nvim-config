@@ -451,7 +451,6 @@ local packer_startup = function(use)
     use {
         'chrisbra/unicode.vim',
         config = function()
-            -- Unfortunately, this doesn't work with nnoremap
             vim.cmd[[nmap ga <Plug>(UnicodeGA)]]
         end
     }
@@ -567,11 +566,53 @@ local packer_startup = function(use)
     -- }
     -- use 'mhinz/vim-signify'
 
-    -- Debug/testing plugins to investigate.
-    --
-    -- use 'puremourning/vimspector'
-    -- use 'mfussenegger/nvim-dap-python'
-    -- use 'rcarriga/vim-ultest'
+    -- Supports Python debugging using debugpy and nvim-dap, which adds
+    -- support for the Debug Adapter Protocol (and requires an adapter
+    -- per language to be debugged).
+    use {
+        'mfussenegger/nvim-dap-python',
+        requires = { "mfussenegger/nvim-dap" },
+        config = function()
+            local dappy = require('dap-python')
+            dappy.setup('~/.virtualenvs/debugpy/bin/python')
+            dappy.test_runner = 'pytest'
+        end
+    }
+
+    -- Uses virtual text to display context information with nvim-dap.
+    use {
+        'theHamsta/nvim-dap-virtual-text',
+        requires = { "mfussenegger/nvim-dap" },
+        config = function()
+            vim.g.dap_virtual_text = true
+        end
+    }
+
+    -- Provides a basic debugger UI for nvim-dap
+    use {
+        "rcarriga/nvim-dap-ui",
+        requires = { "mfussenegger/nvim-dap" },
+    }
+
+    -- Provides a Telescope interface to nvim-dap functionality.
+    use {
+        'nvim-telescope/telescope-dap.nvim',
+        requires = { "mfussenegger/nvim-dap" },
+        config = function()
+            require('telescope').load_extension('dap')
+        end
+    }
+
+    -- Integrates with vim-test and nvim-dap to run tests.
+    use {
+        "rcarriga/vim-ultest",
+        requires = { "vim-test/vim-test" },
+        run = ":UpdateRemotePlugins",
+        config = function()
+            vim.cmd[[nmap ]t <Plug>(ultest-next-fail)]]
+            vim.cmd[[nmap [t <Plug>(ultest-prev-fail)]]
+        end
+    }
 
     -- Lightweight statusbar configuration plugin and (optional) icons to use
     -- in the statusbar.
