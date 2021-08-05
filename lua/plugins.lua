@@ -87,7 +87,7 @@ local packer_startup = function(use)
                     capabilities = capabilities,
                     on_attach = on_attach,
                     flags = {
-                        debounce_text_changes = 150,
+                        debounce_text_changes = 500,
                     }
                 })
             end
