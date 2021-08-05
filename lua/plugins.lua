@@ -247,8 +247,7 @@ local packer_startup = function(use)
     -- Displays class/function/block context at the top of the screen while
     -- scrolling through source code. Like context.vim.
     use {
-        'romgrk/nvim-treesitter-context',
-        requires = { 'nvim-treesitter/nvim-treesitter' },
+        'romgrk/nvim-treesitter-context', after = { 'nvim-treesitter' },
         config = function()
             require('treesitter-context').setup({
                 enable = true,
@@ -320,6 +319,10 @@ local packer_startup = function(use)
     --
     use {
         'fhill2/telescope-ultisnips.nvim',
+        after = {
+            'ultisnips',
+            'telescope.nvim',
+        },
         config = function()
             require('telescope').load_extension('ultisnips')
         end
@@ -379,8 +382,7 @@ local packer_startup = function(use)
     -- :Git write (leaves the formatting changes unstaged). We could also just
     -- use psf/black here instead.
     use {
-        'mhartington/formatter.nvim',
-        ft = { 'python' },
+        'mhartington/formatter.nvim', ft = { 'python' },
         config = function()
             require('formatter').setup({
                 logging = false,
@@ -399,10 +401,20 @@ local packer_startup = function(use)
         end
     }
 
+    -- Make plugin loading conditional on the presence of .git
+    local in_git_worktree = function()
+        local res = vim.fn.system("git rev-parse --is-inside-work-tree")
+        if string.find(res, 'true') then
+            return true
+        else
+            return false
+        end
+    end
+
     -- Provides a Telescope-based interface to the github cli. More complete
     -- than nvim-telescope/telescope-github.nvim (e.g., access to comments).
     use {
-        'pwntester/octo.nvim',
+        'pwntester/octo.nvim', cond = in_git_worktree,
         config = function()
             require('octo').setup({})
         end
@@ -466,7 +478,9 @@ local packer_startup = function(use)
 
     -- Ask Sourcetrail to open the current symbol in the IDE or, conversely,
     -- accept requests from Sourcetrail to open a particular symbol in vim.
-    use 'CoatiSoftware/vim-sourcetrail'
+    use {
+        'CoatiSoftware/vim-sourcetrail', cond = in_git_worktree
+    }
 
     -- File managers
     --
@@ -520,8 +534,8 @@ local packer_startup = function(use)
     --
     -- use 'junegunn/gv.vim'
     use {
-        'rbong/vim-flog',
-        requires = { 'tpope/vim-fugitive' },
+        'rbong/vim-flog', cond = in_git_worktree,
+        after = { 'vim-fugitive' },
     }
 
     -- Create and run queries against codequery symbol databases. Largely
@@ -571,8 +585,10 @@ local packer_startup = function(use)
     -- support for the Debug Adapter Protocol (and requires an adapter
     -- per language to be debugged).
     use {
-        'mfussenegger/nvim-dap-python',
-        requires = { "mfussenegger/nvim-dap" },
+        'mfussenegger/nvim-dap', ft = { 'python' }
+    }
+    use {
+        'mfussenegger/nvim-dap-python', after = { "nvim-dap" },
         config = function()
             local dappy = require('dap-python')
             dappy.setup('~/.virtualenvs/debugpy/bin/python')
@@ -582,8 +598,7 @@ local packer_startup = function(use)
 
     -- Uses virtual text to display context information with nvim-dap.
     use {
-        'theHamsta/nvim-dap-virtual-text',
-        requires = { "mfussenegger/nvim-dap" },
+        'theHamsta/nvim-dap-virtual-text', after = { 'nvim-dap' },
         config = function()
             vim.g.dap_virtual_text = true
         end
@@ -591,14 +606,12 @@ local packer_startup = function(use)
 
     -- Provides a basic debugger UI for nvim-dap
     use {
-        "rcarriga/nvim-dap-ui",
-        requires = { "mfussenegger/nvim-dap" },
+        "rcarriga/nvim-dap-ui", after = { 'nvim-dap' },
     }
 
     -- Provides a Telescope interface to nvim-dap functionality.
     use {
-        'nvim-telescope/telescope-dap.nvim',
-        requires = { "mfussenegger/nvim-dap" },
+        'nvim-telescope/telescope-dap.nvim', after = { 'nvim-dap' },
         config = function()
             require('telescope').load_extension('dap')
         end
@@ -606,13 +619,16 @@ local packer_startup = function(use)
 
     -- Integrates with vim-test and nvim-dap to run tests.
     use {
-        "rcarriga/vim-ultest",
-        requires = { "vim-test/vim-test" },
-        run = ":UpdateRemotePlugins",
-        config = function()
-            vim.cmd[[nmap ]t <Plug>(ultest-next-fail)]]
-            vim.cmd[[nmap [t <Plug>(ultest-prev-fail)]]
-        end
+        { 'vim-test/vim-test', ft = { 'python' } },
+        {
+            "rcarriga/vim-ultest", ft = { 'python' },
+            after = { "vim-test" },
+            run = ":UpdateRemotePlugins",
+            config = function()
+                vim.cmd[[nmap ]t <Plug>(ultest-next-fail)]]
+                vim.cmd[[nmap [t <Plug>(ultest-prev-fail)]]
+            end
+        }
     }
 
     -- Lightweight statusbar configuration plugin and (optional) icons to use
@@ -621,7 +637,6 @@ local packer_startup = function(use)
         'hoob3rt/lualine.nvim',
         requires = {
             'kyazdani42/nvim-web-devicons',
-            'nvim-treesitter/nvim-treesitter',
         },
         -- (I don't know what any of the extensions actually does)
         -- extensions = { 'quickfix', 'fugitive', 'nerdtree', 'nvim-tree' },
