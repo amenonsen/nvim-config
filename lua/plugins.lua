@@ -317,12 +317,12 @@ local packer_startup = function(use)
     -- current filetype. Promising, but still slightly buggy (e.g., it breaks
     -- when previewing snippets containing ^M).
     --
-    -- use {
-    --     'fhill2/telescope-ultisnips.nvim',
-    --     config = function()
-    --         telescope.load_extension('ultisnips')
-    --     end
-    -- }
+    use {
+        'fhill2/telescope-ultisnips.nvim',
+        config = function()
+            require('telescope').load_extension('ultisnips')
+        end
+    }
 
     -- A completion manager that can obtain completion data from multiple
     -- sources (paths, buffers, UltiSnips, etc.).
