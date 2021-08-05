@@ -180,7 +180,8 @@ local packer_startup = function(use)
                             ["ac"] = "@class.outer",
                             ["ic"] = "@class.inner",
                             ["aP"] = "@parameter.outer",
-                            ["iP"] = "@parameter.inner"
+                            ["iP"] = "@parameter.inner",
+                            ["a#"] = "@comment.outer",
                         }
                     },
                     move = {
