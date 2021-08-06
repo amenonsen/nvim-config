@@ -84,6 +84,7 @@ function! MyHighlights() abort
     highlight clear LspDiagnosticsSignWarning
     highlight clear LspDiagnosticsSignInformation
     highlight clear LspDiagnosticsSignHint
+    highlight LspDiagnosticsSignHint ctermfg=darkgrey guifg=#666666
     highlight GitSignsChange ctermbg=NONE guibg=NONE
     highlight GitSignsDelete ctermbg=NONE guibg=NONE
     highlight GitSignsAdd ctermbg=NONE guibg=NONE
