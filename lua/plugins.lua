@@ -656,7 +656,7 @@ local packer_startup = function(use)
                     lualine_b = {require('nvim-treesitter').statusline},
                     lualine_c = {},
                     lualine_x = {},
-                    lualine_y = {},
+                    lualine_y = {'branch'},
                     lualine_z = {'location'}
                 },
                 inactive_sections = {
