@@ -152,14 +152,14 @@ local packer_startup = function(use)
         -- (though I'm not sure if it's really needed).
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
-            -- (Disabled for now because it only works with vim-commentary)
-            -- 'JoosepAlviste/nvim-ts-context-commentstring',
+            'JoosepAlviste/nvim-ts-context-commentstring',
         },
         config = function()
             require('nvim-treesitter.configs').setup({
                 ensure_installed = "maintained",
                 context_commentstring = {
-                    enable = false,
+                    enable = true,
+                    enable_autocmd = false,
                 },
                 highlight = {
                     enable = false,
@@ -228,21 +228,29 @@ local packer_startup = function(use)
 
     -- Defines gcc/gc{motion}/gC{motion} mappings to toggle comments on the
     -- current line or selected lines based on the 'commentstring' setting.
-    -- Unlike vim-commentary, this plugin knows how to use block comments,
-    -- and works even with treesitter-defined text objects, e.g., gcaf to
-    -- comment out an entire function.
-    use 'tomtom/tcomment_vim'
-
-    -- A commenting plugin (like vim-commentary), disabled because it
-    -- doesn't work well with context-commentstring… so why bother?
-    -- use {
-    --     'b3nj5m1n/kommentary',
-    --     config = function()
-    --         require('kommentary.config').configure_language("default", {
-    --             ignore_whitespace = false,
-    --         })
-    --     end
-    -- }
+    use {
+        'b3nj5m1n/kommentary',
+        config = function()
+            require('kommentary.config').configure_language("default", {
+                ignore_whitespace = false,
+                use_consistent_indentation = true,
+                single_line_comment_string = 'auto',
+                multi_line_comment_strings = 'auto',
+                hook_function = function()
+                    require('ts_context_commentstring.internal').update_commentstring()
+                end
+            })
+            require('kommentary.config').configure_language("html", {
+                ignore_whitespace = false,
+                use_consistent_indentation = true,
+                single_line_comment_string = 'auto',
+                multi_line_comment_strings = 'auto',
+                hook_function = function()
+                    require('ts_context_commentstring.internal').update_commentstring()
+                end
+            })
+        end
+    }
 
     -- Displays class/function/block context at the top of the screen while
     -- scrolling through source code. Like context.vim.
