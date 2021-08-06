@@ -168,6 +168,10 @@ local packer_startup = function(use)
         end
     }
 
+    -- Highlight LSP diagnostic signs in the left column sensibly (red
+    -- for error, orange for warning, that sort of thing).
+    use { 'folke/lsp-colors.nvim' }
+
     -- A Neovim interface to the tree-sitter incremental parser library, to
     -- enable syntax-aware highlighting, text object definitions, and other
     -- features (instead of using the traditional regex-based hacks).
