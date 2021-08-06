@@ -556,17 +556,6 @@ local packer_startup = function(use)
         end
     }
 
-    -- Executes syntax-checking external programs for open files and displays
-    -- the results as annotations to the source code. Useful, but can be slow
-    -- sometimes. Functionality partly superseded by lsp/tree-sitter features
-    -- in neovim. Neomake may also be useful for non-interpreted languages.
-    -- Disabled for now.
-    --
-    -- use {
-    --     'scrooloose/syntastic',
-    --     ft = { 'python', 'c', 'cpp', 'sh', 'go', 'rust' }
-    -- }
-
     -- Magit-inspired git integration, disabled because of various minor bugs
     -- (e.g., context highlighting keeps complaining about unknown highlight
     -- definitions).
