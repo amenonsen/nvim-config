@@ -594,8 +594,10 @@ local packer_startup = function(use)
             after = { "vim-test" },
             run = ":UpdateRemotePlugins",
             config = function()
-                vim.cmd[[nmap ]t <Plug>(ultest-next-fail)]]
-                vim.cmd[[nmap [t <Plug>(ultest-prev-fail)]]
+                require('which-key').register({
+                    ["[t"] = { "<Plug>(ultest-prev-fail)", "Prev test failure" },
+                    ["]t"] = { "<Plug>(ultest-next-fail)", "Next test failure" },
+                })
             end
         }
     }
