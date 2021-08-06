@@ -538,14 +538,15 @@ local packer_startup = function(use)
         after = { 'vim-fugitive' },
     }
 
-    -- Create and run queries against codequery symbol databases. Largely
-    -- superseded by LSP functionality in neovim.
-    --
-    -- use 'devjoe/vim-codequery'
-
-    -- Automatically manage ctags files as you open and close buffers.
-    --
-    -- use 'ludovicchabant/vim-gutentags'
+    -- Displays git change annotations and provides inline previews of
+    -- diff hunks.
+    use {
+        'lewis6991/gitsigns.nvim',
+        after = { 'vim-fugitive' },
+        config = function()
+            require('gitsigns').setup()
+        end
+    }
 
     -- Executes syntax-checking external programs for open files and displays
     -- the results as annotations to the source code. Useful, but can be slow
