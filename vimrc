@@ -35,8 +35,6 @@ nnoremap <C-z> :Gwrite<Cr>
 nnoremap <C-n> :NERDTreeToggle<Cr>
 nnoremap <C-d><C-d> :bd<Cr>
 nnoremap <C-t><C-t> :TagbarToggle<Cr>
-nnoremap <leader>as :SourcetrailRefresh<CR>
-nnoremap <leader>aa :SourcetrailActivateToken<CR>
 
 abbr &em- &#8239;—&thinsp;
 digraph .. 8230 " …

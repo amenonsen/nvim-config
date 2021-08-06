@@ -487,7 +487,16 @@ local packer_startup = function(use)
     -- Ask Sourcetrail to open the current symbol in the IDE or, conversely,
     -- accept requests from Sourcetrail to open a particular symbol in vim.
     use {
-        'CoatiSoftware/vim-sourcetrail', cond = in_git_worktree
+        'CoatiSoftware/vim-sourcetrail', cond = in_git_worktree,
+        config = function()
+            require('which-key').register({
+                ["<leader>S"] = {
+                    name = "+Sourcetrail",
+                    r = { "<cmd>SourcetrailRefresh<CR>", "Start/refresh connection" },
+                    a = { "<cmd>SourcetrailActivateToken<CR>", "Activate current token" },
+                },
+            })
+        end
     }
 
     -- File managers
