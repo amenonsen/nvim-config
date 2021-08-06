@@ -472,7 +472,9 @@ local packer_startup = function(use)
     use {
         'chrisbra/unicode.vim',
         config = function()
-            vim.cmd[[nmap ga <Plug>(UnicodeGA)]]
+            require('which-key').register({
+                ga = { "<Plug>(UnicodeGA)", "Identify character" }
+            })
         end
     }
 
