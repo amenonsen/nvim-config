@@ -638,7 +638,10 @@ local packer_startup = function(use)
         {
             "rcarriga/vim-ultest", ft = { 'python' },
             after = { "vim-test" },
-            run = ":UpdateRemotePlugins",
+            run = function ()
+                vim.cmd[[packadd vim-ultest]]
+                vim.cmd[[UpdateRemotePlugins]]
+            end,
             config = function()
                 require('which-key').register({
                     ["[t"] = { "<Plug>(ultest-prev-fail)", "Prev test failure" },
