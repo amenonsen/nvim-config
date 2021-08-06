@@ -45,10 +45,10 @@ digraph \/ 10007 " ✗
 digraph RU 8377 " ₹
 
 map ' `
-map FF :s/^From: .*\(<.*>\)$/From: Abhijit Menon-Sen \1/
-map FW :s/^From: .*\(<.*>\)$/From: Abhijit Menon-Sen <abhijit@menon-sen.com>/:$s/-- ams/-- Abhijit/gg
-map LR :s/\[[^]]*\] \([Rr][Ee]: \)* *//
-map SD :s/\(^[^:]*: \).* <\(.*@.*\)>/\1\2/
+map FF :s/^From: .*\(<.*>\)$/From: Abhijit Menon-Sen \1/<CR>
+map FW :s/^From: .*\(<.*>\)$/From: Abhijit Menon-Sen <abhijit@menon-sen.com>/<CR>:$s/-- ams/-- Abhijit/<CR>gg
+map LR :s/\[[^]]*\] \([Rr][Ee]: \)* *//<CR>
+map SD :s/\(^[^:]*: \).* <\(.*@.*\)>/\1\2/<CR>
 map TC ddpcwCck0cwTo0
 
 filetype plugin indent on
