@@ -21,6 +21,33 @@ local packer_startup = function(use)
     -- quotes, open/close <tags>, etc. (e.g., cs"', ysiw")
     use 'tpope/vim-surround'
 
+    -- Key mapping manager (supersedes junegunn/vim-peekaboo and has a lot more
+    -- functionality, like displaying applicable mappings after partial input).
+    use {
+        'folke/which-key.nvim',
+        config = function()
+            require('which-key').setup({
+                plugins = {
+                    marks = true,
+                    registers = true,
+                    spelling = {
+                        enabled = true,
+                        suggestions = 20,
+                    },
+                    presets = {
+                        operators = true,
+                        motions = true,
+                        text_objects = true,
+                        windows = true,
+                        nav = true,
+                        z = true,
+                        g = true,
+                    },
+                },
+            })
+        end
+    }
+
     -- Configure Neovim's builtin LSP client to speak to various external
     -- language servers. (Supersedes LSP clients like coc.nvim or ale that
     -- provide similar functionality.)
@@ -428,33 +455,6 @@ local packer_startup = function(use)
         end
     }
 
-    -- Key mapping manager (supersedes junegunn/vim-peekaboo and has a lot more
-    -- functionality, like displaying applicable mappings after partial input).
-    use {
-        'folke/which-key.nvim',
-        config = function()
-            require('which-key').setup({
-                plugins = {
-                    marks = true,
-                    registers = true,
-                    spelling = {
-                        enabled = true,
-                        suggestions = 20,
-                    },
-                    presets = {
-                        operators = true,
-                        motions = true,
-                        text_objects = true,
-                        windows = true,
-                        nav = true,
-                        z = true,
-                        g = true,
-                    },
-                },
-            })
-        end
-    }
-
     -- Displays undo history visually.
     use {
         'simnalamburt/vim-mundo',
@@ -530,27 +530,10 @@ local packer_startup = function(use)
         { 'sjl/splice.vim', opt = true },
     }
 
-    -- Works with fugitive.vim to enable Github integration via :GBrowse and
-    -- completion of issue numbers etc. via C-x C-o in commit messages (:help
-    -- compl-omni). May be unnecessary given octo.
-    --
-    --use 'tpope/vim-rhubarb'
-
-    -- Interactive `git log --oneline --graph` that can open commits either
-    -- in a split or in the browser. Nice, but not used very often, nor much
-    -- better than `Git log --oneline --graph` via fugitive.vim.
-    --
-    -- use 'junegunn/gv.vim'
-    use {
-        'rbong/vim-flog', cond = in_git_worktree,
-        after = { 'vim-fugitive' },
-    }
-
     -- Displays git change annotations and provides inline previews of
     -- diff hunks.
     use {
-        'lewis6991/gitsigns.nvim',
-        after = { 'vim-fugitive' },
+        'lewis6991/gitsigns.nvim', after = { 'vim-fugitive' },
         config = function()
             require('gitsigns').setup()
         end
