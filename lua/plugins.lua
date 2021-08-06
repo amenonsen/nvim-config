@@ -81,27 +81,45 @@ local packer_startup = function(use)
                     vim.lsp.handlers.signature_help, {border = border}
                 )
 
-                local opts = { noremap = true, silent = true }
-
-                buf_nmap('gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-                buf_nmap('gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-                buf_nmap('K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-                buf_nmap('gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-                buf_nmap('<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-                buf_nmap('<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-                buf_nmap('<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-                buf_nmap('<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-                buf_nmap('<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-                buf_nmap('<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-                buf_nmap('<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-                buf_nmap('gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-                buf_nmap('<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-                buf_nmap('[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-                buf_nmap(']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-                buf_nmap('<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-                buf_nmap("<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-
                 buf_setopt('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+                require('which-key').register({
+                    ["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover text" },
+                    ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definision" },
+                    ["gr"] = { "<cmd>lua vim.lsp.buf.references()<CR>", "List references" },
+                    ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
+                    ["gi"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation" },
+                    ["<C-k>"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
+                    ["[e"] = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", "Prev diagnostic" },
+                    ["]e"] = { "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Next diagnostic" },
+                    ["<leader>q"] = {
+                        "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",
+                        "List all diagnostics"
+                    },
+                    ["<leader>e"] = {
+                        "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",
+                        "Show line diagnostics"
+                    },
+                    ["<leader>F"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
+                    ["<leader>D"] = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition" },
+                    ["<leader>rn"] = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
+                    ["<leader>ca"] = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action" },
+                    ["\\W"] = {
+                        name = "+Workspaces",
+                        l = {
+                            "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
+                            "List workspace directories"
+                        },
+                        a = {
+                            "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
+                            "Add workspace directory"
+                        },
+                        r = {
+                            "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
+                            "Remove workspace directory"
+                        },
+                    },
+                }, { buffer = bufnr })
             end
 
             local capabilities = vim.lsp.protocol.make_client_capabilities()
