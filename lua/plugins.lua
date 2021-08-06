@@ -556,29 +556,6 @@ local packer_startup = function(use)
         end
     }
 
-    -- Magit-inspired git integration, disabled because of various minor bugs
-    -- (e.g., context highlighting keeps complaining about unknown highlight
-    -- definitions).
-    -- use {
-    --     'TimUntersberger/neogit',
-    --     config = function()
-    --         require('neogit').setup({
-    --             disable_context_highlighting = true,
-    --             disable_commit_confirmations = true,
-    --             integrations = {
-    --                 diffview = true,
-    --             }
-    --         })
-    --     end
-    -- }
-    -- use {
-    --     'sindrets/diffview.nvim',
-    --     config = function()
-    --         require('diffview').setup({})
-    --     end
-    -- }
-    -- use 'mhinz/vim-signify'
-
     -- Supports Python debugging using debugpy and nvim-dap, which adds
     -- support for the Debug Adapter Protocol (and requires an adapter
     -- per language to be debugged).
