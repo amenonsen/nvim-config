@@ -79,6 +79,7 @@ function! MyHighlights() abort
     highlight NormalFloat guibg=#1f5364
     highlight FloatBorder guifg=white guibg=#1f2335
     highlight TreesitterContext guibg=#a89984
+    highlight SignColumn ctermbg=NONE guibg=NONE
 endfunction
 
 if !exists("autocmds_loaded")
