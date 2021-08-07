@@ -63,12 +63,12 @@ snippet a "Link"
 endsnippet
 
 snippet au "Link to selected URL"
-<a href="${VISUAL}">${1:anchor}</a>
+<a href="${VISUAL:/ *$//}">${1:anchor}</a>
 endsnippet
 
 snippet at "Link to selected text"
 
-<a href="$1">${VISUAL}</a>
+<a href="$1">${VISUAL:/ *$//}</a>
 
 endsnippet
 
