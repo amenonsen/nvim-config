@@ -43,11 +43,6 @@ digraph \/ 10007 " ✗
 digraph RU 8377 " ₹
 
 map ' `
-map FF :s/^From: .*\(<.*>\)$/From: Abhijit Menon-Sen \1/<CR>
-map FW :s/^From: .*\(<.*>\)$/From: Abhijit Menon-Sen <abhijit@menon-sen.com>/<CR>:$s/-- ams/-- Abhijit/<CR>gg
-map LR :s/\[[^]]*\] \([Rr][Ee]: \)* *//<CR>
-map SD :s/\(^[^:]*: \).* <\(.*@.*\)>/\1\2/<CR>
-map TC ddpcwCck0cwTo0
 
 filetype plugin indent on
 
@@ -119,8 +114,14 @@ if !exists("autocmds_loaded")
     autocmd BufRead */work/2ndq/*.[ch] setlocal ts=4 sw=4 noexpandtab
 
     autocmd FileType text setlocal textwidth=72
-    autocmd FileType mail setlocal textwidth=72 comments=n:>,b:#
     autocmd FileType python setlocal textwidth=80
+
+    autocmd FileType mail setlocal textwidth=72 comments=n:>,b:#
+    autocmd FileType mail nnoremap <buffer> FF :s/^From: .*\(<.*>\)$/From: Abhijit Menon-Sen \1/<CR>
+    autocmd FileType mail nnoremap <buffer> FW :s/^From: .*\(<.*>\)$/From: Abhijit Menon-Sen <abhijit@menon-sen.com>/<CR>:$s/-- ams/-- Abhijit/<CR>gg
+    autocmd FileType mail nnoremap <buffer> SD :s/\(^[^:]*: \).* <\(.*@.*\)>/\1\2/<CR>
+    autocmd FileType mail nnoremap <buffer> LR :s/\[[^]]*\] \([Rr][Ee]: \)* *//<CR>
+    autocmd FileType mail nnoremap <buffer> TC ddpcwCck0cwTo0
 
     " Tree-sitter based folding seems to work, but I don't use it much.
     " There's also an lsp-based version at 'pierreglaser/folding-nvim'.
