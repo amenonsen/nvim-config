@@ -344,11 +344,11 @@ local packer_startup = function(use)
                     "<cmd>lua require('telescope-files').project_files()<CR>",
                     "Find files",
                 },
-                ["<C-g>"] = { "<cmd>Telescope live_grep<CR>", "Live grep" },
                 ["<C-b>"] = { "<cmd>Telescope buffers<CR>", "Buffers" },
+                ["<C-g>"] = { "<cmd>Telescope live_grep<CR>", "Live grep" },
                 ["<C-t>"] = {
                     name = "+Telescope",
-                    ["<C-t>"] = { "<cmd>Telescope builtin<CR>", "Telescope" },
+                    ["<C-t>"] = { "<cmd>Telescope builtin<CR>", "Builtins" },
                     h = { "<cmd>Telescope help_tags<CR>", "Help tags" },
                 },
             })
