@@ -614,6 +614,27 @@ local packer_startup = function(use)
                 word_diff = false,
                 use_internal_diff = true,
             })
+
+            require('which-key').register({
+                ["[c"] = { "Prev hunk" },
+                ["]c"] = { "Next hunk" },
+                ["<leader>h"] = {
+                    name = "+Hunk",
+                    s = { "Stage hunk" },
+                    u = { "Unstage hunk" },
+                    r = { "Reset hunk" },
+                    R = { "Reset buffer" },
+                    p = { "Preview hunk" },
+                    b = { "Blame line" },
+                },
+            }, { mode = "n" })
+            require('which-key').register({
+                ["<leader>h"] = {
+                    name = "+Hunk",
+                    s = { "Stage hunk" },
+                    r = { "Reset hunk" },
+                },
+            }, { mode = "v" })
         end
     }
 
