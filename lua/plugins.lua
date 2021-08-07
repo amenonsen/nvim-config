@@ -100,7 +100,7 @@ local packer_startup = function(use)
                         "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",
                         "Show line diagnostics"
                     },
-                    ["<leader>F"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
+                    ["<leader>LF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
                     ["<leader>D"] = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition" },
                     ["<leader>rn"] = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
                     ["<leader>ca"] = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action" },
@@ -454,6 +454,9 @@ local packer_startup = function(use)
                         end
                     },
                 }
+            })
+            require('which-key').register({
+                ["<leader>F"] = { "<cmd>Format<CR>", "Format code" },
             })
         end
     }
