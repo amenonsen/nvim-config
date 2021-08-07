@@ -339,6 +339,19 @@ local packer_startup = function(use)
                     },
                 },
             })
+            require('which-key').register({
+                ["<C-f>"] = {
+                    "<cmd>lua require('telescope-files').project_files()<CR>",
+                    "Find files",
+                },
+                ["<C-g>"] = { "<cmd>Telescope live_grep<CR>", "Live grep" },
+                ["<C-b>"] = { "<cmd>Telescope buffers<CR>", "Buffers" },
+                ["<C-t>"] = {
+                    name = "+Telescope",
+                    ["<C-t>"] = { "<cmd>Telescope builtin<CR>", "Telescope" },
+                    h = { "<cmd>Telescope help_tags<CR>", "Help tags" },
+                },
+            })
         end
     }
 
@@ -461,6 +474,64 @@ local packer_startup = function(use)
         end
     }
 
+    -- Makes it easier to input and identify Unicode characters and
+    -- digraphs. <C-x><C-z> in insert mode completes based on the name
+    -- of the unicode character, :Digraphs xxx searches digraphs for
+    -- matches.
+    use {
+        'chrisbra/unicode.vim',
+        config = function()
+            require('which-key').register({
+                ga = { "<Plug>(UnicodeGA)", "Identify character" }
+            })
+        end
+    }
+
+    -- Displays undo history visually.
+    use {
+        'simnalamburt/vim-mundo', cmd = 'MundoToggle',
+        config = function()
+            vim.g.mundo_right = 1
+        end
+    }
+
+    -- Displays a "minimap"-style split display of classes/functions, but is
+    -- distressingly slow to detect movement through the source code.
+    use {
+        'preservim/tagbar', cmd = 'TagbarToggle',
+    }
+
+    -- File managers
+    --
+    -- Nice, but the functionality overlaps with fzf/Telescope to some extent,
+    -- so not as frequently used. The lua version is fast and offers more file
+    -- management functionality (like rename/delete), but is considerably less
+    -- polished.
+    use {
+        'scrooloose/nerdtree', cmd = 'NERDTreeToggle',
+        config = function ()
+            -- We need to set this to \u00a0 (non-breaking space)
+            -- because the default works only with :syntax on
+            vim.g.NERDTreeNodeDelimiter = " "
+            vim.g.NERDTreeIgnore = { '.pyc' }
+        end
+    }
+    use {
+        'kyazdani42/nvim-tree.lua', cmd = 'NvimTreeToggle',
+        requires = { 'kyazdani42/nvim-web-devicons' },
+    }
+
+    -- Add mappings to toggle all of the above plugins.
+    require('which-key').register({
+        ["\\T"] = {
+            name = "+Toggles",
+            T = { "<cmd>TagbarToggle<CR>", "Tagbar" },
+            U = { "<cmd>MundoToggle<CR>", "Undo history" },
+            N = { "<cmd>NERDTreeToggle<CR>", "NERDTree" },
+            V = { "<cmd>NvimTreeToggle<CR>", "NvimTree" },
+        }
+    })
+
     -- Make plugin loading conditional on the presence of .git
     local in_git_worktree = function()
         local res = vim.fn.system("git rev-parse --is-inside-work-tree")
@@ -480,37 +551,6 @@ local packer_startup = function(use)
         end
     }
 
-    -- Displays undo history visually.
-    use {
-        'simnalamburt/vim-mundo',
-        cmd = 'MundoToggle',
-        config = function()
-            vim.g.mundo_right = 1
-            vim.cmd[[MundoToggle]]
-        end
-    }
-
-    -- Makes it easier to input and identify Unicode characters and
-    -- digraphs. <C-x><C-z> in insert mode completes based on the name
-    -- of the unicode character, :Digraphs xxx searches digraphs for
-    -- matches.
-    use {
-        'chrisbra/unicode.vim',
-        config = function()
-            require('which-key').register({
-                ga = { "<Plug>(UnicodeGA)", "Identify character" }
-            })
-        end
-    }
-
-    -- Displays a "minimap"-style split display of classes/functions, but is
-    -- distressingly slow to detect movement through the source code.
-    use {
-        'preservim/tagbar',
-        cmd = 'TagbarToggle',
-        config = 'vim.cmd[[TagbarToggle]]',
-    }
-
     -- Ask Sourcetrail to open the current symbol in the IDE or, conversely,
     -- accept requests from Sourcetrail to open a particular symbol in vim.
     use {
@@ -524,30 +564,6 @@ local packer_startup = function(use)
                 },
             })
         end
-    }
-
-    -- File managers
-    --
-    -- Nice, but the functionality overlaps with fzf/Telescope to some extent,
-    -- so not as frequently used. The lua version is fast and offers more file
-    -- management functionality (like rename/delete), but is considerably less
-    -- polished.
-    use {
-        'scrooloose/nerdtree',
-        cmd = 'NERDTreeToggle',
-        config = function ()
-            -- We need to set this to \u00a0 (non-breaking space)
-            -- because the default works only with :syntax on
-            vim.g.NERDTreeNodeDelimiter = " "
-            vim.g.NERDTreeIgnore = { '.pyc' }
-            vim.cmd[[NERDTreeToggle]]
-        end
-    }
-    use {
-        'kyazdani42/nvim-tree.lua',
-        cmd = 'NvimTreeToggle',
-        config = 'vim.cmd[[NvimTreeToggle]]',
-        requires = { 'kyazdani42/nvim-web-devicons' },
     }
 
     -- Fugitive provides a lightweight alternative to running git commands with

@@ -25,16 +25,8 @@ endif
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 nnoremap <F9> <cmd>setlocal spell<CR>
-nnoremap <F5> :MundoToggle<CR>
-nnoremap Tb :Telescope builtin<Cr>
-nnoremap <C-f> :lua require('telescope-files').project_files()<Cr>
-nnoremap <C-g> :Telescope live_grep<Cr>
-nnoremap <C-b> :Telescope buffers<Cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <C-z> :Gwrite<Cr>
-nnoremap <C-n> :NERDTreeToggle<Cr>
 nnoremap <C-d><C-d> :bd<Cr>
-nnoremap <C-t><C-t> :TagbarToggle<Cr>
 
 abbr &em- &#8239;—&thinsp;
 digraph .. 8230 " …
