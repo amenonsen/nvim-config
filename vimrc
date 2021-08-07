@@ -30,9 +30,6 @@ nnoremap <C-z> :Gwrite<Cr>
 nnoremap <C-d><C-d> :bd<Cr>
 
 abbr &em- &#8239;—&thinsp;
-digraph .. 8230 " …
-digraph v/ 10003 " ✓
-digraph \/ 10007 " ✗
 digraph RU 8377 " ₹
 
 map ' `
