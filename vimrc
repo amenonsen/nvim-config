@@ -91,19 +91,11 @@ if !exists("autocmds_loaded")
         autocmd ColorScheme * call MyHighlights()
     augroup end
 
-    " Format python buffers on save. Disabled because invoking Black
-    " through formatter.nvim causes hangs.
-    augroup FormatAutogroup
-        "autocmd!
-        "autocmd BufWritePost *.py FormatWrite
-    augroup END
-
     autocmd BufNewFile,BufRead *.post set filetype=post
-    autocmd BufRead */postgres/src/*.[chl] setlocal ts=4 sw=4 noexpandtab tags=tags
-    autocmd BufRead */postgres/doc/src/* setlocal ts=4 sw=4 expandtab tags=tags
-    autocmd BufRead */postgre[sS][qQ][lL]/src/*.[chl] setlocal ts=4 sw=4 noexpandtab tags=tags
-    autocmd BufRead */postgre[sS][qQ][lL]/doc/src/* setlocal ts=4 sw=4 expandtab tags=tags
-    autocmd BufRead */work/2ndq/*.[ch] setlocal ts=4 sw=4 noexpandtab
+
+    autocmd BufNewFile,BufRead */[pP]ostgre[sS]*/src/*.[chl] setlocal ts=4 sw=4 noexpandtab
+    autocmd BufNewFile,BufRead */[pP]ostgre[sS]*/doc/src/* setlocal ts=4 sw=4 expandtab
+    autocmd BufNewFile,BufRead */work/2ndq/*.[ch] setlocal ts=4 sw=4 noexpandtab
 
     autocmd FileType text setlocal textwidth=72
     autocmd FileType python setlocal textwidth=80
