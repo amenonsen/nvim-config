@@ -21,7 +21,8 @@ else
     vmap <LeftRelease> "*ygv
 endif
 
-" WTF?
+" In insert mode, correct the last spelling error with the first
+" suggestion and keep going.
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 nnoremap <F9> <cmd>setlocal spell<CR>
