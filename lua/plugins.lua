@@ -557,7 +557,7 @@ local packer_startup = function(use)
         'CoatiSoftware/vim-sourcetrail', cond = in_git_worktree,
         config = function()
             require('which-key').register({
-                ["<leader>S"] = {
+                ["\\S"] = {
                     name = "+Sourcetrail",
                     r = { "<cmd>SourcetrailRefresh<CR>", "Start/refresh connection" },
                     a = { "<cmd>SourcetrailActivateToken<CR>", "Activate current token" },
