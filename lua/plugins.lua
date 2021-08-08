@@ -780,6 +780,7 @@ local packer_startup = function(use)
             local custom_theme = require('lualine.themes.gruvbox')
             custom_theme.normal.a.bg = '#a89984'
             custom_theme.normal.b.bg = '#a89984'
+            custom_theme.normal.b.fg = '#ffeeee'
             custom_theme.normal.c.bg = '#a89984'
             custom_theme.insert.a.bg = '#a89984'
             custom_theme.insert.b.bg = '#a89984'
@@ -794,8 +795,9 @@ local packer_startup = function(use)
             custom_theme.command.b.bg = '#a89984'
             custom_theme.command.c.bg = '#a89984'
             custom_theme.inactive.a.bg = '#a89984'
-            custom_theme.inactive.b.bg = '#a89984'
-            custom_theme.inactive.c.bg = '#a89984'
+            custom_theme.inactive.a.fg = '#666666'
+            custom_theme.inactive.b.bg = custom_theme.normal.b.fg
+            custom_theme.inactive.c.bg = custom_theme.normal.c.fg
 
             require('lualine').setup({
                 options = {
@@ -814,7 +816,7 @@ local packer_startup = function(use)
                     lualine_z = {'location'}
                 },
                 inactive_sections = {
-                    lualine_a = {},
+                    lualine_a = {'filename'},
                     lualine_b = {},
                     lualine_c = {},
                     lualine_x = {},
