@@ -138,6 +138,7 @@ local packer_startup = function(use)
             end
 
             -- Based on iamcco/diagnostic-languageserver
+            -- Might be worth trying https://github.com/mattn/efm-langserver
             nvim_lsp.diagnosticls.setup({
                 filetypes = { 'sh' },
                 on_attach = on_attach,
