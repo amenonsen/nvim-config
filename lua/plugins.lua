@@ -662,6 +662,16 @@ local packer_startup = function(use)
             dappy.setup('~/.virtualenvs/debugpy/bin/python')
             dappy.test_runner = 'pytest'
         end
+        -- :lua require'dap'.toggle_breakpoint()
+        -- :lua require'dap'.continue()
+        -- :lua require'dap'.step_over()
+        -- :lua require'dap'.step_into()
+        -- :lua require'dap'.repl.open()
+        -- :help dap-widgets, dap-mapping
+        -- nnoremap <silent> <leader>dn :lua require('dap-python').test_method()<CR>
+        -- nnoremap <silent> <leader>df :lua require('dap-python').test_class()<CR>
+        -- vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
+        -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
     }
 
     -- Uses virtual text to display context information with nvim-dap.
