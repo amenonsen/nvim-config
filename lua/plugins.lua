@@ -444,7 +444,9 @@ local packer_startup = function(use)
             vim.o.completeopt = "menuone,noselect"
             local compe_map_opts = {expr = true, noremap = true, silent = true}
             vim.api.nvim_set_keymap('i', '<C-Space>', 'compe#complete()', compe_map_opts)
-            vim.api.nvim_set_keymap('i', '<CR>', "compe#confirm('<CR>')", compe_map_opts)
+            vim.api.nvim_set_keymap('i', '<CR>', "compe#confirm({ 'keys': '<CR>', 'select': v:true })", compe_map_opts)
+            vim.api.nvim_set_keymap('i', '<Space>', "compe#confirm({ 'keys': '<Space>', 'select': v:true })", compe_map_opts)
+            vim.api.nvim_set_keymap('i', '<BS>', "compe#close('<BS>')", compe_map_opts)
             vim.api.nvim_set_keymap('i', '<ESC>', "compe#close('<ESC>')", compe_map_opts)
 
             -- This recipe from the compe README should configure Tab
