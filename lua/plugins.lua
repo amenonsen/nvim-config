@@ -184,6 +184,10 @@ local packer_startup = function(use)
             )
 
             vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]]
+
+            -- https://github.com/jose-elias-alvarez/null-ls.nvim allows
+            -- LSP actions to be implemented in Neovim using buffers.
+            -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/MAIN.md
         end
     }
 
