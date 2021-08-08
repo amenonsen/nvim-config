@@ -537,20 +537,10 @@ local packer_startup = function(use)
         }
     })
 
-    -- Make plugin loading conditional on the presence of .git
-    local in_git_worktree = function()
-        local res = vim.fn.system("git rev-parse --is-inside-work-tree")
-        if string.find(res, 'true') then
-            return true
-        else
-            return false
-        end
-    end
-
     -- Provides a Telescope-based interface to the github cli. More complete
     -- than nvim-telescope/telescope-github.nvim (e.g., access to comments).
     use {
-        'pwntester/octo.nvim', cond = in_git_worktree,
+        'pwntester/octo.nvim',
         config = function()
             require('octo').setup({})
         end
@@ -559,7 +549,7 @@ local packer_startup = function(use)
     -- Ask Sourcetrail to open the current symbol in the IDE or, conversely,
     -- accept requests from Sourcetrail to open a particular symbol in vim.
     use {
-        'CoatiSoftware/vim-sourcetrail', cond = in_git_worktree,
+        'CoatiSoftware/vim-sourcetrail',
         config = function()
             require('which-key').register({
                 ["\\S"] = {
