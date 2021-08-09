@@ -7,19 +7,17 @@ local d = ls.dynamic_node
 local f = ls.function_node
 local sn = ls.snippet_node
 
-local date_input = function()
-    local now
-    local f = io.popen("date +'%Y-%m-%d %H:%M:%S'", "r")
-    for line in f:lines() do
-        return sn(nil, i(1, string.gsub(line, "\n", "")))
-    end
+local date_input = function(args, state, fmt)
+    local fmt = fmt or "%Y-%m-%d"
+    local f = io.popen("date +'" .. fmt .. "'", "r")
+    return sn(nil, i(1, string.gsub(f:read(), "\n", "")))
 end
 
 ls.snippets = {
     post = {
         s({ trig = "post", dscr = "Post header" }, {
             i(1, "Title"),
-            t({ "", "meta: date=" }), d(2, date_input, {}),
+            t({ "", "meta: date=" }), d(2, date_input, {}, "%Y-%m-%d %H:%M:%S"),
             t({ "", "meta: tags=" }), i(3),
             t({ "", "", "<short>", "" }), i(4),
             t({ "", "</short>", "", "" }), i(0),
@@ -33,7 +31,7 @@ ls.snippets = {
         }),
 
         s({ trig = "meta", dscr = "Post metadata" }, {
-            t({ "meta: date=" }), d(1, date_input, {}),
+            t({ "meta: date=" }), d(1, date_input, {}, "%Y-%m-%d %H:%M:%S"),
             t({ "", "meta: tags=" }), i(2),
             t({ "", "" }), i(0),
         }),
