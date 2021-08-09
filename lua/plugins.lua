@@ -351,9 +351,9 @@ local packer_startup = function(use)
                 },
                 ["<C-b>"] = { "<cmd>Telescope buffers<CR>", "Buffers" },
                 ["<C-g>"] = { "<cmd>Telescope live_grep<CR>", "Live grep" },
-                ["<C-t>"] = {
+                ["T"] = {
                     name = "+Telescope",
-                    ["<C-t>"] = { "<cmd>Telescope builtin<CR>", "Builtins" },
+                    ["T"] = { "<cmd>Telescope builtin<CR>", "Builtins" },
                     h = { "<cmd>Telescope help_tags<CR>", "Help tags" },
                 },
             })
