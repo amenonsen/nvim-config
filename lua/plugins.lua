@@ -125,7 +125,7 @@ local packer_startup = function(use)
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-            local servers = { "pyright", "bashls", "yamlls", "jsonls", "cssls", "html" }
+            local servers = { "clangd", "pyright", "bashls", "yamlls", "jsonls", "cssls", "html" }
 
             for _, ls in ipairs(servers) do
                 nvim_lsp[ls].setup({
