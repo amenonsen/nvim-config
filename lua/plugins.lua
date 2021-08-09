@@ -369,42 +369,23 @@ local packer_startup = function(use)
         end
     }
 
-    -- Snippet manager for vim. There are neovim-specific snippet managers
-    -- like luasnip, but they require snippets to be defined as lua code.
-    -- https://github.com/neovim/nvim-lspconfig/wiki/Snippets
+    -- A snippet manager (required for some LSP actions) written in Lua.
+    -- More complex than UltiSnips, but supports the new VS Code snippet
+    -- format, integrates better with compe, and has more features.
+    -- See https://github.com/neovim/nvim-lspconfig/wiki/Snippets
     use {
-        'sirver/ultisnips',
-        -- This is a collection of optional UltiSnips snippets for various
-        -- languages, which I don't use often, and is hence disabled. This
-        -- restricts the use of UltiSnips to custom snippets.
-        -- requires = { 'honza/vim-snippets' },
+        'L3MON4D3/LuaSnip',
         config = function()
-            vim.g.UltiSnipsExpandTrigger = "<C-j>"
-            vim.g.UltiSnipsJumpForwardTrigger = "<C-b>"
-            vim.g.UltiSnipsJumpBackwardTrigger = "<C-z>"
-            vim.g.UltiSnipsSnippetDirectories = {
-                '/home/ams/.config/nvim/UltiSnips',
-            }
+            require('luasnip').config.setup({
+                store_selection_keys = "<Tab>"
+            })
+            require('config.luasnip')
         end
     }
 
-    -- Displays a popup with previews of UltiSnips snippets applicable to the
-    -- current filetype. Promising, but still slightly buggy (e.g., it breaks
-    -- when previewing snippets containing ^M).
-    --
-    use {
-        'fhill2/telescope-ultisnips.nvim',
-        after = {
-            'ultisnips',
-            'telescope.nvim',
-        },
-        config = function()
-            require('telescope').load_extension('ultisnips')
-        end
-    }
-
-    -- A completion manager that can obtain completion data from multiple
-    -- sources (paths, buffers, UltiSnips, etc.).
+    -- A completion manager that can obtain completion data from
+    -- multiple sources (paths, buffers, LuaSnip, etc.). Will be
+    -- superseded by the pure-Lua nvim-cmp plugin when stable.
     use {
         'hrsh7th/nvim-compe',
         config = function()
@@ -433,11 +414,12 @@ local packer_startup = function(use)
                     path = true,
                     buffer = true,
                     calc = true,
+                    spell = true,
                     nvim_lsp = true,
                     nvim_lua = true,
                     vsnip = false,
-                    ultisnips = true,
-                    luasnip = false,
+                    ultisnips = false,
+                    luasnip = true,
                 }
             })
 
@@ -449,15 +431,11 @@ local packer_startup = function(use)
             vim.api.nvim_set_keymap('i', '<BS>', "compe#close('<BS>')", compe_map_opts)
             vim.api.nvim_set_keymap('i', '<ESC>', "compe#close('<ESC>')", compe_map_opts)
 
-            -- This recipe from the compe README should configure Tab
-            -- and S-Tab to scroll through the completion list, or jump
-            -- between tabstops inside a snippet (which is what I really
-            -- want it for). But it's specific to vsnip, and I couldn't
-            -- find equivalent UltiSnips functions. It's not worth doing
-            -- without snippets, so it's commented out for now.
-            --[[
+            -- Configure Tab/S-Tab to scroll through the suggestions or
+            -- jump between tabstops inside a completed snippet.
+
             local t = function(str)
-              return vim.api.nvim_replace_termcodes(str, true, true, true)
+                return vim.api.nvim_replace_termcodes(str, true, true, true)
             end
 
             local check_back_space = function()
@@ -465,14 +443,13 @@ local packer_startup = function(use)
                 return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
             end
 
-            -- Use (s-)tab to:
-            --- move to prev/next item in completion menuone
-            --- jump to prev/next snippet's placeholder
+            local luasnip = require('luasnip')
+
             _G.tab_complete = function()
               if vim.fn.pumvisible() == 1 then
                 return t "<C-n>"
-              elseif vim.fn['vsnip#available'](1) == 1 then
-                return t "<Plug>(vsnip-expand-or-jump)"
+              elseif luasnip.expand_or_jumpable() then
+                return t "<Plug>luasnip-expand-or-jump"
               elseif check_back_space() then
                 return t "<Tab>"
               else
@@ -482,10 +459,9 @@ local packer_startup = function(use)
             _G.s_tab_complete = function()
               if vim.fn.pumvisible() == 1 then
                 return t "<C-p>"
-              elseif vim.fn['vsnip#jumpable'](-1) == 1 then
-                return t "<Plug>(vsnip-jump-prev)"
+              elseif luasnip.jumpable(-1) then
+                return t "<Plug>luasnip-jump-prev"
               else
-                -- If <S-Tab> is not working in your terminal, change it to <C-h>
                 return t "<S-Tab>"
               end
             end
@@ -493,7 +469,7 @@ local packer_startup = function(use)
             vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
             vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
             vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-            vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true}) ]]
+            vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
         end
     }
 
