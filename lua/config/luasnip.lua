@@ -9,8 +9,7 @@ local sn = ls.snippet_node
 
 local date_input = function(args, state, fmt)
     local fmt = fmt or "%Y-%m-%d"
-    local f = io.popen("date +'" .. fmt .. "'", "r")
-    return sn(nil, i(1, string.gsub(f:read(), "\n", "")))
+    return sn(nil, i(1, os.date(fmt)))
 end
 
 ls.snippets = {
@@ -23,7 +22,7 @@ ls.snippets = {
             t({ "", "</short>", "", "" }), i(0),
         }),
 
-        s({ trig = "pimg", dscr = "Image post" }, {
+        s({ trig = "pimg", dscr = "Image post header" }, {
             i(1, "Title"),
             t({ "", "meta: img=" }), i(2),
             t({ "", "meta: alt=" }), i(3),
