@@ -736,6 +736,13 @@ local packer_startup = function(use)
         }
     }
 
+    -- Plugins that evaluate Lua code in Vim buffers, just to play
+    -- around with.
+    use {
+        { 'bfredl/nvim-luadev', opt = true },
+        { 'rafcamlet/nvim-luapad', opt = true },
+    }
+
     -- Lightweight statusbar configuration plugin and (optional) icons to use
     -- in the statusbar.
     use {
