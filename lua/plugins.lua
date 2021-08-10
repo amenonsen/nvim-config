@@ -85,7 +85,7 @@ local packer_startup = function(use)
 
                 require('which-key').register({
                     ["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover text" },
-                    ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definision" },
+                    ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition" },
                     ["gr"] = { "<cmd>lua vim.lsp.buf.references()<CR>", "List references" },
                     ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
                     ["gi"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation" },
