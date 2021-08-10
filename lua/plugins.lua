@@ -723,10 +723,9 @@ local packer_startup = function(use)
     use {
         { 'vim-test/vim-test', ft = { 'python' } },
         {
-            "rcarriga/vim-ultest", ft = { 'python' },
-            after = { "vim-test" },
+            "rcarriga/vim-ultest", after = { "vim-test" },
             run = function ()
-                vim.cmd[[packadd vim-ultest]]
+                vim.cmd[[packadd vim-test vim-ultest]]
                 vim.cmd[[UpdateRemotePlugins]]
             end,
             config = function()
