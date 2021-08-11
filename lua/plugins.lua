@@ -524,10 +524,9 @@ local packer_startup = function(use)
         end
     }
 
-    -- Displays a "minimap"-style split display of classes/functions, but is
-    -- distressingly slow to detect movement through the source code.
+    -- Displays a "minimap"-style split display of classes/functions.
     use {
-        'preservim/tagbar', cmd = 'TagbarToggle',
+        'simrat39/symbols-outline.nvim'
     }
 
     -- Unlike NERDTree and NvimTree, Rnvimr uses RPC to communicate with
@@ -540,7 +539,7 @@ local packer_startup = function(use)
     require('which-key').register({
         ["\\T"] = {
             name = "+Toggles",
-            T = { "<cmd>TagbarToggle<CR>", "Tagbar" },
+            S = { "<cmd>SymbolsOutline<CR>", "Code outline" },
             U = { "<cmd>MundoToggle<CR>", "Undo history" },
             R = { "<cmd>RnvimrToggle<CR>", "Ranger" },
         }
