@@ -530,24 +530,10 @@ local packer_startup = function(use)
         'preservim/tagbar', cmd = 'TagbarToggle',
     }
 
-    -- File managers
-    --
-    -- Nice, but the functionality overlaps with fzf/Telescope to some extent,
-    -- so not as frequently used. The lua version is fast and offers more file
-    -- management functionality (like rename/delete), but is considerably less
-    -- polished.
+    -- Unlike NERDTree and NvimTree, Rnvimr uses RPC to communicate with
+    -- Ranger, thus inheriting all of its file management functionality.
     use {
-        'scrooloose/nerdtree', cmd = 'NERDTreeToggle',
-        config = function ()
-            -- We need to set this to \u00a0 (non-breaking space)
-            -- because the default works only with :syntax on
-            vim.g.NERDTreeNodeDelimiter = " "
-            vim.g.NERDTreeIgnore = { '.pyc' }
-        end
-    }
-    use {
-        'kyazdani42/nvim-tree.lua', cmd = 'NvimTreeToggle',
-        requires = { 'kyazdani42/nvim-web-devicons' },
+        'kevinhwang91/rnvimr'
     }
 
     -- Add mappings to toggle all of the above plugins.
@@ -556,8 +542,7 @@ local packer_startup = function(use)
             name = "+Toggles",
             T = { "<cmd>TagbarToggle<CR>", "Tagbar" },
             U = { "<cmd>MundoToggle<CR>", "Undo history" },
-            N = { "<cmd>NERDTreeToggle<CR>", "NERDTree" },
-            V = { "<cmd>NvimTreeToggle<CR>", "NvimTree" },
+            R = { "<cmd>RnvimrToggle<CR>", "Ranger" },
         }
     })
 
