@@ -769,7 +769,9 @@ local packer_startup = function(use)
                     disabled_filetypes = {}
                 },
                 sections = {
-                    lualine_a = {'filename'},
+                    lualine_a = {
+                        { 'filename', path = 1 }
+                    },
                     lualine_b = {require('nvim-treesitter').statusline},
                     lualine_c = {},
                     lualine_x = {},
@@ -777,7 +779,9 @@ local packer_startup = function(use)
                     lualine_z = {'location'}
                 },
                 inactive_sections = {
-                    lualine_a = {'filename'},
+                   lualine_a = {
+                        { 'filename', path = 1 }
+                    },
                     lualine_b = {},
                     lualine_c = {},
                     lualine_x = {},
