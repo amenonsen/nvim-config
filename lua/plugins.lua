@@ -569,6 +569,42 @@ local packer_startup = function(use)
         end
     }
 
+    use {
+        'sindrets/diffview.nvim',
+        config = function()
+            require('diffview').setup()
+        end
+    }
+    use {
+        'TimUntersberger/neogit',
+        config = function()
+            require('neogit').setup({
+                disable_signs = false,
+                disable_context_highlighting = false,
+                disable_commit_confirmation = true,
+                signs = {
+                    section = { ">", "v" },
+                    item = { ">", "v" },
+                    hunk = { "", "" },
+                },
+                integrations = {
+                    diffview = true,
+                },
+                mappings = {
+                    status = {
+                        ["B"] = "BranchPopup",
+                    }
+                }
+            })
+
+            -- Neogit defines signs in syntax/*, so it doesn't work
+            -- without syntax highlighting enabled (or the per-buffer
+            -- sign definitions copied here, which I don't want to do).
+            vim.cmd[[autocmd FileType Neogit* syntax on]]
+            vim.cmd[[autocmd FileType * syntax off]]
+        end
+    }
+
     -- Fugitive provides a lightweight alternative to running git commands with
     -- `:!git …`, with better output handling and nice buffer integration where
     -- appropriate.
