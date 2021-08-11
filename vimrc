@@ -112,6 +112,6 @@ if !exists("autocmds_loaded")
     "autocmd FileType python setlocal foldexpr=nvim_treesitter#foldexpr()
 endif
 
-colorscheme low
+colorscheme off
 
 syntax off
