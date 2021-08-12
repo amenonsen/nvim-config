@@ -120,6 +120,8 @@ local packer_startup = function(use)
                         },
                     },
                 }, { buffer = bufnr })
+
+                require('aerial').on_attach(client)
             end
 
             local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -524,9 +526,18 @@ local packer_startup = function(use)
         end
     }
 
-    -- Displays a "minimap"-style split display of classes/functions.
+    -- Displays a "minimap"-style split display of classes/functions,
+    -- but unlike Tagbar (which is unmaintained), these plugins are
+    -- based on LSP symbols.
     use {
         'simrat39/symbols-outline.nvim'
+    }
+
+    use {
+        'stevearc/aerial.nvim',
+        config = function()
+            require('telescope').load_extension('aerial')
+        end
     }
 
     -- Unlike NERDTree and NvimTree, Rnvimr uses RPC to communicate with
@@ -539,7 +550,8 @@ local packer_startup = function(use)
     require('which-key').register({
         ["\\T"] = {
             name = "+Toggles",
-            S = { "<cmd>SymbolsOutline<CR>", "Code outline" },
+            A = { "<cmd>AerialToggle<CR>", "Aerial outline" },
+            S = { "<cmd>SymbolsOutline<CR>", "Symbols outline" },
             U = { "<cmd>MundoToggle<CR>", "Undo history" },
             R = { "<cmd>RnvimrToggle<CR>", "Ranger" },
         }
