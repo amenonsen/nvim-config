@@ -739,23 +739,15 @@ local packer_startup = function(use)
             -- colour in every mode.
             -- See also https://github.com/hoob3rt/lualine.nvim/blob/master/CONTRIBUTING.md#adding-a-theme
             local custom_theme = require('lualine.themes.gruvbox')
-            custom_theme.normal.a.bg = '#a89984'
-            custom_theme.normal.b.bg = '#a89984'
+            local modes = {
+                'normal', 'insert', 'visual', 'replace', 'command', 'inactive'
+            }
+            for _, k in pairs(modes) do
+                for _, s in pairs({'a','b','c'}) do
+                    custom_theme[k][s].bg = '#a89984'
+                end
+            end
             custom_theme.normal.b.fg = '#ffeeee'
-            custom_theme.normal.c.bg = '#a89984'
-            custom_theme.insert.a.bg = '#a89984'
-            custom_theme.insert.b.bg = '#a89984'
-            custom_theme.insert.c.bg = '#a89984'
-            custom_theme.visual.a.bg = '#a89984'
-            custom_theme.visual.b.bg = '#a89984'
-            custom_theme.visual.c.bg = '#a89984'
-            custom_theme.replace.a.bg = '#a89984'
-            custom_theme.replace.b.bg = '#a89984'
-            custom_theme.replace.c.bg = '#a89984'
-            custom_theme.command.a.bg = '#a89984'
-            custom_theme.command.b.bg = '#a89984'
-            custom_theme.command.c.bg = '#a89984'
-            custom_theme.inactive.a.bg = '#a89984'
             custom_theme.inactive.a.fg = '#666666'
             custom_theme.inactive.b.bg = custom_theme.normal.b.fg
             custom_theme.inactive.c.bg = custom_theme.normal.c.fg
