@@ -733,6 +733,23 @@ local packer_startup = function(use)
         }
     }
 
+    -- Integrates with srid/neuron to manage Zettelkasten notes.
+    -- However, (a) neuron is pretty clunky to install, and (b) it's
+    -- being superseded by its "spiritual successor", emanote, which
+    -- also promises to be somewhat awkward.
+    use {
+        'oberblastmeister/neuron.nvim',
+        config = function()
+            require('neuron').setup({
+                virtual_titles = true,
+                mappings = true,
+                run = nil,
+                neuron_dir = "~/neuron",
+                leader = "gz"
+            })
+        end
+    }
+
     -- Lightweight statusbar configuration plugin and (optional) icons to use
     -- in the statusbar.
     use {
