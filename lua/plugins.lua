@@ -346,8 +346,6 @@ local packer_startup = function(use)
             local telescope = require('telescope')
             local actions = require("telescope.actions")
             telescope.setup({
-                extensions = {
-                },
                 defaults = {
                     mappings = {
                         i = {
@@ -359,6 +357,16 @@ local packer_startup = function(use)
                         },
                     },
                 },
+                pickers = {
+                    buffers = {
+                        sort_lastused = true,
+                        theme = 'dropdown',
+                        previewer = false,
+                        mappings = {
+                            i = { ['<C-d>'] = "delete_buffer" },
+                        }
+                    },
+                }
             })
             require('which-key').register({
                 ["<C-f>"] = {
