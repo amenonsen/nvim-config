@@ -125,7 +125,21 @@ local packer_startup = function(use)
             end
 
             local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown' }
             capabilities.textDocument.completion.completionItem.snippetSupport = true
+            capabilities.textDocument.completion.completionItem.preselectSupport = true
+            capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+            capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+            capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+            capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+            capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+            capabilities.textDocument.completion.completionItem.resolveSupport = {
+                properties = {
+                    'documentation',
+                    'detail',
+                    'additionalTextEdits',
+                }
+            }
 
             local servers = { "clangd", "pyright", "bashls", "yamlls", "jsonls", "cssls", "html" }
 
@@ -385,53 +399,45 @@ local packer_startup = function(use)
         end
     }
 
-    -- A completion manager that can obtain completion data from
-    -- multiple sources (paths, buffers, LuaSnip, etc.). Will be
-    -- superseded by the pure-Lua nvim-cmp plugin when stable.
+    -- A completion manager that obtains completion data from multiple
+    -- sources (LSP, LuaSnip, buffers, etc.) based on plugins included
+    -- below. This is the pure-Lua successor of nvim-compe.
     use {
-        'hrsh7th/nvim-compe',
+        'hrsh7th/nvim-cmp',
         config = function()
-            require('compe').setup({
-                enabled = true,
-                autocomplete = false,
-                debug = false,
-                min_length = 1,
-                preselect = 'enable',
-                throttle_time = 80,
-                source_timeout = 200,
-                resolve_timeout = 800,
-                incomplete_delay = 400,
-                max_abbr_width = 100,
-                max_kind_width = 100,
-                max_menu_width = 100,
-                documentation = {
-                    border = { '', '' ,'', ' ', '', '', '', ' ' },
-                    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-                    max_width = 120,
-                    min_width = 60,
-                    max_height = math.floor(vim.o.lines * 0.3),
-                    min_height = 1,
+            local cmp = require "cmp"
+            cmp.setup({
+                completion = {
+                    autocomplete = {},
+                    completeopt = 'menu,menuone,noselect',
+                    keyword_length = 1,
                 },
-                source = {
-                    path = true,
-                    buffer = true,
-                    calc = true,
-                    spell = true,
-                    nvim_lsp = true,
-                    nvim_lua = true,
-                    vsnip = false,
-                    ultisnips = false,
-                    luasnip = true,
-                }
+                snippet = {
+                    expand = function(args)
+                        require('luasnip').lsp_expand(args.body)
+                    end
+                },
+                sources = {
+                    { name = 'buffer' },
+                    { name = 'luasnip' },
+                    { name = 'nvim_lsp' },
+                },
+                mapping = {
+                    ['<C-p>'] = cmp.mapping.prev_item(),
+                    ['<C-n>'] = cmp.mapping.next_item(),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<BS>'] = cmp.mapping.close(),
+                    ['<Esc>'] = cmp.mapping.close(),
+                    ['<Space>'] = cmp.mapping.confirm({
+                        behavior = cmp.ConfirmBehavior.Replace,
+                        select = true,
+                    }),
+                    ['<CR>'] = cmp.mapping.confirm({
+                        behavior = cmp.ConfirmBehavior.Replace,
+                        select = true,
+                    }),
+                },
             })
-
-            vim.o.completeopt = "menuone,noselect"
-            local compe_map_opts = {expr = true, noremap = true, silent = true}
-            vim.api.nvim_set_keymap('i', '<C-Space>', 'compe#complete()', compe_map_opts)
-            vim.api.nvim_set_keymap('i', '<CR>', "compe#confirm({ 'keys': '<CR>', 'select': v:true })", compe_map_opts)
-            vim.api.nvim_set_keymap('i', '<Space>', "compe#confirm({ 'keys': '<Space>', 'select': v:true })", compe_map_opts)
-            vim.api.nvim_set_keymap('i', '<BS>', "compe#close('<BS>')", compe_map_opts)
-            vim.api.nvim_set_keymap('i', '<ESC>', "compe#close('<ESC>')", compe_map_opts)
 
             -- Configure Tab/S-Tab to scroll through the suggestions or
             -- jump between tabstops inside a completed snippet.
@@ -474,6 +480,18 @@ local packer_startup = function(use)
             vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
             vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
             vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
+        end
+    }
+
+    -- Completion sources for nvim-cmp.
+    use {
+        { 'saadparwaiz1/cmp_luasnip' },
+        { 'hrsh7th/cmp-buffer' },
+    }
+    use {
+        'hrsh7th/cmp-nvim-lsp',
+        config = function()
+            require('cmp_nvim_lsp').setup({})
         end
     }
 
