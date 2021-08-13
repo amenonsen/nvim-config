@@ -740,11 +740,7 @@ local packer_startup = function(use)
         requires = {
             'kyazdani42/nvim-web-devicons',
         },
-        -- (I don't know what any of the extensions actually does)
-        -- extensions = { 'quickfix', 'fugitive', 'nerdtree', 'nvim-tree' },
-        -- If this function becomes much larger, it might be worth moving it
-        -- into lua/config/lualine.lua, and invoking it as follows:
-        -- config = [[require('config.lualine')]]
+        extensions = { 'quickfix', 'fugitive' },
         config = function ()
             -- Get rid of distracting colour changes in the statusline
             -- altogether, by setting all the backgrounds to the same
