@@ -366,11 +366,6 @@ local packer_startup = function(use)
                             i = { ['<C-d>'] = "delete_buffer" },
                         }
                     },
-                    live_grep = {
-                        -- Don't make a hash of the sorted-by-filename
-                        -- results that rg returns
-                        sorter = require("telescope.sorters").empty(),
-                    }
                 }
             })
             require('which-key').register({
@@ -379,7 +374,10 @@ local packer_startup = function(use)
                     "Find files",
                 },
                 ["<C-b>"] = { "<cmd>Telescope buffers<CR>", "Buffers" },
-                ["<C-g>"] = { "<cmd>Telescope live_grep<CR>", "Live grep" },
+                ["<C-g>"] = {
+                    "<cmd>lua require('telescope.builtin').live_grep({sorter=require('telescope.sorters').empty()})<CR>",
+                    "Live grep"
+                },
                 ["T"] = {
                     name = "+Telescope",
                     ["T"] = { "<cmd>Telescope builtin<CR>", "Builtins" },
