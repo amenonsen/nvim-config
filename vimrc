@@ -28,6 +28,7 @@ inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 nnoremap <F9> <cmd>setlocal spell<CR>
 nnoremap <C-z> :Gwrite<Cr>
 nnoremap <C-d><C-d> :bd<Cr>
+tnoremap <Esc> <C-\><C-n>
 
 abbr &em- &#8239;—&thinsp;
 digraph RU 8377 " ₹
