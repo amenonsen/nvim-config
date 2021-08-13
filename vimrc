@@ -73,6 +73,7 @@ function! MyHighlights() abort
     highlight GitSignsChange ctermbg=NONE guibg=NONE
     highlight GitSignsDelete ctermbg=NONE guibg=NONE
     highlight GitSignsAdd ctermbg=NONE guibg=NONE
+    highlight TelescopeMultiSelection ctermfg=green guifg=green
 endfunction
 
 if !exists("autocmds_loaded")
