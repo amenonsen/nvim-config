@@ -765,7 +765,7 @@ local packer_startup = function(use)
             })
             require('which-key').register({
                 ["\\D"] = {
-                    "<cmd>setlocal number<CR><cmd>lua require('dapui').open()<CR>",
+                    "<cmd>setlocal number<CR><cmd>lua require('dapui').toggle()<CR>",
                     "DAP: Debugger UI",
                 }
             })
