@@ -691,7 +691,54 @@ local packer_startup = function(use)
     -- support for the Debug Adapter Protocol (and requires an adapter
     -- per language to be debugged).
     use {
-        'mfussenegger/nvim-dap', ft = { 'python' }
+        'mfussenegger/nvim-dap',
+        config = function()
+            local dap = require('dap')
+            local repl = require('dap.repl')
+
+            repl.commands = vim.tbl_extend('force', repl.commands, {
+                custom_commands = {
+                    ['.br'] = function(text)
+                        if text == "" or not text:match(':') then
+                            repl.append("ERR: Please specify `.br filename:lineno`")
+                            return
+                        end
+                        local fname, lnum = unpack(vim.split(text, ':'))
+                        local bufnr = vim.fn.bufnr(fname)
+                        if bufnr == -1 then
+                            bufnr = vim.fn.bufload(fname)
+                        end
+                        require('dap.breakpoints').toggle({}, bufnr, tonumber(lnum))
+                        dap.session():set_breakpoints(bufnr)
+                    end
+                },
+            })
+
+            require('which-key').register({
+                ["\\B"] = {
+                    "<cmd>lua require('dap').toggle_breakpoint()<CR>",
+                    "DAP: Toggle breakpoint",
+                },
+                ["\\C"] = {
+                    "<cmd>setlocal number<CR><cmd>lua require('dap').continue()<CR>",
+                    "DAP: Continue",
+                },
+            })
+
+            -- These dap-repl-specific mappings make using the debugger
+            -- a bit more like the usual gdb experience, but note that
+            -- you can't _start_ the program using 'c' in the REPL, you
+            -- must first do so using the \C mapping above in the source
+            -- buffer, and only then switch to the REPL.
+            vim.cmd[[
+                augroup dap-repl
+                    autocmd!
+                    autocmd FileType dap-repl nnoremap<buffer> n <cmd>lua require('dap').step_over()<CR>
+                    autocmd FileType dap-repl nnoremap<buffer> s <cmd>lua require('dap').step_into()<CR>
+                    autocmd FileType dap-repl nnoremap<buffer> c <cmd>lua require('dap').continue()<CR>
+                augroup end
+            ]]
+        end
     }
     use {
         'mfussenegger/nvim-dap-python', after = { "nvim-dap" },
@@ -700,16 +747,6 @@ local packer_startup = function(use)
             dappy.setup('~/.virtualenvs/debugpy/bin/python')
             dappy.test_runner = 'pytest'
         end
-        -- :lua require'dap'.toggle_breakpoint()
-        -- :lua require'dap'.continue()
-        -- :lua require'dap'.step_over()
-        -- :lua require'dap'.step_into()
-        -- :lua require'dap'.repl.open()
-        -- :help dap-widgets, dap-mapping
-        -- nnoremap <silent> <leader>dn :lua require('dap-python').test_method()<CR>
-        -- nnoremap <silent> <leader>df :lua require('dap-python').test_class()<CR>
-        -- vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
-        -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
     }
 
     -- Uses virtual text to display context information with nvim-dap.
@@ -723,6 +760,16 @@ local packer_startup = function(use)
     -- Provides a basic debugger UI for nvim-dap
     use {
         "rcarriga/nvim-dap-ui", after = { 'nvim-dap' },
+        config = function()
+            require('dapui').setup({
+            })
+            require('which-key').register({
+                ["\\D"] = {
+                    "<cmd>setlocal number<CR><cmd>lua require('dapui').open()<CR>",
+                    "DAP: Debugger UI",
+                }
+            })
+        end
     }
 
     -- Provides a Telescope interface to nvim-dap functionality.
