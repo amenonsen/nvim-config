@@ -529,7 +529,7 @@ local packer_startup = function(use)
                 }
             })
             require('which-key').register({
-                ["<leader>F"] = { "<cmd>Format<CR>", "Format code" },
+                ["FF"] = { "<cmd>Format<CR>", "Format code" },
             })
         end
     }
