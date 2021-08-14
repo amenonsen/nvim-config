@@ -747,6 +747,13 @@ local packer_startup = function(use)
                     autocmd FileType dap-repl nnoremap<buffer> n <cmd>lua require('dap').step_over()<CR>
                     autocmd FileType dap-repl nnoremap<buffer> s <cmd>lua require('dap').step_into()<CR>
                     autocmd FileType dap-repl nnoremap<buffer> c <cmd>lua require('dap').continue()<CR>
+                    autocmd FileType dap-*,dapui* nnoremap<buffer> -w <cmd>1wincmd w<CR>
+                    autocmd FileType dap-*,dapui* nnoremap<buffer> -s <cmd>2wincmd w<CR>
+                    autocmd FileType dap-*,dapui* nnoremap<buffer> -b <cmd>3wincmd w<CR>
+                    autocmd FileType dap-*,dapui* nnoremap<buffer> -S <cmd>4wincmd w<CR>
+                    autocmd FileType dap-*,dapui* nnoremap<buffer> -c <cmd>5wincmd w<CR>
+                    autocmd FileType dap-*,dapui* nnoremap<buffer> -o <cmd>6wincmd w<CR>
+                    autocmd FileType dap-*,dapui* nnoremap<buffer> -r <cmd>7wincmd w<CR>
                 augroup end
             ]]
         end
