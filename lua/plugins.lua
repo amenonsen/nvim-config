@@ -808,6 +808,27 @@ local packer_startup = function(use)
                 vim.cmd[[UpdateRemotePlugins]]
             end,
             config = function()
+                require("ultest").setup({
+                    builders = {
+                        ['python#pytest'] = function (cmd)
+                            local non_modules = {'python', 'pipenv', 'poetry'}
+                            local module_index = 1
+                            if vim.tbl_contains(non_modules, cmd[1]) then
+                                module_index = 3
+                            end
+                            local module = cmd[module_index]
+                            local args = vim.list_slice(cmd, module_index + 1)
+                            return {
+                                dap = {
+                                    type = 'python',
+                                    request = 'launch',
+                                    module = module,
+                                    args = args
+                                }
+                            }
+                        end
+                    }
+                })
                 require('which-key').register({
                     ["[t"] = { "<Plug>(ultest-prev-fail)", "Prev test failure" },
                     ["]t"] = { "<Plug>(ultest-next-fail)", "Next test failure" },
