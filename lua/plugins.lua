@@ -100,7 +100,7 @@ local packer_startup = function(use)
                         "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",
                         "Show line diagnostics"
                     },
-                    ["<leader>LF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
+                    ["FF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
                     ["<leader>D"] = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition" },
                     ["<leader>rn"] = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
                     ["<leader>ca"] = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action" },
@@ -141,7 +141,9 @@ local packer_startup = function(use)
                 }
             }
 
-            local servers = { "clangd", "pyright", "bashls", "yamlls", "jsonls", "cssls", "html" }
+            local servers = {
+                "null-ls", "clangd", "pyright", "bashls", "yamlls", "jsonls", "cssls", "html"
+            }
 
             for _, ls in ipairs(servers) do
                 nvim_lsp[ls].setup({
@@ -153,44 +155,6 @@ local packer_startup = function(use)
                 })
             end
 
-            -- Based on iamcco/diagnostic-languageserver
-            -- Might be worth trying https://github.com/mattn/efm-langserver
-            nvim_lsp.diagnosticls.setup({
-                filetypes = { 'sh' },
-                on_attach = on_attach,
-                flags = {
-                    debounce_text_changes = 150,
-                },
-                init_options = {
-                    filetypes = { sh = "shellcheck" },
-                    linters = {
-                        shellcheck = {
-                            sourceName = "shellcheck",
-                            command = "shellcheck",
-                            debounce = 100,
-                            args = { '--format=gcc', '-' },
-                            offsetLine = 0,
-                            offsetColumn = 0,
-                            formatLines = 1,
-                            formatPattern = {
-                                "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
-                                {
-                                    line = 1,
-                                    column = 2,
-                                    message = 4,
-                                    security = 3,
-                                }
-                            },
-                            securities = {
-                                error = "error",
-                                warning = "warning",
-                                note = "info",
-                            },
-                        },
-                    },
-                },
-            })
-
             vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
                 vim.lsp.diagnostic.on_publish_diagnostics, {
                     virtual_text = false,
@@ -199,17 +163,37 @@ local packer_startup = function(use)
                 }
             )
 
-            vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]]
-
-            -- https://github.com/jose-elias-alvarez/null-ls.nvim allows
-            -- LSP actions to be implemented in Neovim using buffers.
-            -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/MAIN.md
+            vim.cmd [[
+                autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+            ]]
         end
     }
 
     -- Highlight LSP diagnostic signs in the left column sensibly (red
     -- for error, orange for warning, that sort of thing).
     use { 'folke/lsp-colors.nvim' }
+
+    -- A language server that integrates with external tools like black
+    -- and shellcheck, as well as allowing LSP actions to be implemented
+    -- in Lua using buffers inside Neovim (without separate processes).
+    -- Can provide diagnostics, formatting, and code actions (with many
+    -- builtin configurations for existing tools).
+    use {
+        'jose-elias-alvarez/null-ls.nvim',
+        config = function()
+            local nls = require "null-ls"
+
+            nls.config({
+                debounce = 250,
+                sources = {
+                    nls.builtins.formatting.black,
+                    nls.builtins.diagnostics.shellcheck.with({
+                        diagnostics_format = "[#{c}] #{m} (#{s})"
+                    })
+                }
+            })
+        end,
+    }
 
     -- A Neovim interface to the tree-sitter incremental parser library, to
     -- enable syntax-aware highlighting, text object definitions, and other
@@ -503,34 +487,6 @@ local packer_startup = function(use)
         'hrsh7th/cmp-nvim-lsp',
         config = function()
             require('cmp_nvim_lsp').setup({})
-        end
-    }
-
-    -- Invokes external formatting tools (think gofmt, black) by filetype. Can
-    -- be invoked with :Format or configured to format-on-save. We don't enable
-    -- the latter because it sometimes causes hangs, and doesn't play well with
-    -- :Git write (leaves the formatting changes unstaged). We could also just
-    -- use psf/black here instead.
-    use {
-        'mhartington/formatter.nvim', ft = { 'python' },
-        config = function()
-            require('formatter').setup({
-                logging = false,
-                filetype = {
-                    python = {
-                        function()
-                            return {
-                                exe = "black",
-                                args = {"-"},
-                                stdin = true
-                            }
-                        end
-                    },
-                }
-            })
-            require('which-key').register({
-                ["FF"] = { "<cmd>Format<CR>", "Format code" },
-            })
         end
     }
 
