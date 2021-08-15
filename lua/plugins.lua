@@ -142,7 +142,7 @@ local packer_startup = function(use)
             }
 
             local servers = {
-                "null-ls", "clangd", "pyright", "bashls", "yamlls", "jsonls", "cssls", "html"
+                "clangd", "pyright", "bashls", "yamlls", "jsonls", "cssls", "html"
             }
 
             for _, ls in ipairs(servers) do
@@ -192,6 +192,7 @@ local packer_startup = function(use)
                     })
                 }
             })
+            require("lspconfig")["null-ls"].setup({})
         end,
     }
 
