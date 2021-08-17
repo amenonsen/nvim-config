@@ -56,30 +56,12 @@ local packer_startup = function(use)
         config = function()
             local nvim_lsp = require('lspconfig')
 
-            local border = {
-                {'╭', "FloatBorder"},
-                {'─', "FloatBorder"},
-                {'╮', "FloatBorder"},
-                {'│', "FloatBorder"},
-                {'╯', "FloatBorder"},
-                {'─', "FloatBorder"},
-                {'╰', "FloatBorder"},
-                {'│', "FloatBorder"},
-            }
-
             -- Define buffer-local mappings and options to access LSP
             -- functionality after the language server and buffer are
             -- attached.
             local on_attach = function(client, bufnr)
                 local function buf_nmap(...) vim.api.nvim_buf_set_keymap(bufnr, 'n', ...) end
                 local function buf_setopt(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-                vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-                    vim.lsp.handlers.hover, {border = border}
-                )
-                vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-                    vim.lsp.handlers.signature_help, {border = border}
-                )
 
                 buf_setopt('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
