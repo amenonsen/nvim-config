@@ -137,6 +137,38 @@ local packer_startup = function(use)
                 })
             end
 
+            local sumneko_dir = '/home/ams/build/lua-language-server'
+            local sumneko_binary = sumneko_dir .. '/bin/Linux/lua-language-server'
+            local runtime_path = vim.split(package.path, ';')
+            table.insert(runtime_path, "lua/?.lua")
+            table.insert(runtime_path, "lua/?/init.lua")
+
+            nvim_lsp.sumneko_lua.setup({
+                cmd = {sumneko_binary, "-E", sumneko_dir .. "/main.lua"};
+                settings = {
+                    Lua = {
+                        runtime = {
+                            version = 'LuaJIT',
+                            path = runtime_path,
+                        },
+                        completion = {
+                            callSnippet = "Both",
+                        },
+                        diagnostics = {
+                            globals = {'vim'},
+                        },
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file("", true),
+                        },
+                        telemetry = {
+                            enable = false,
+                        },
+                    },
+                },
+                capabilities = capabilities,
+                on_attach = on_attach,
+            })
+
             vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
                 vim.lsp.diagnostic.on_publish_diagnostics, {
                     virtual_text = false,
