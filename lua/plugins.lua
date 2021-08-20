@@ -836,6 +836,9 @@ local packer_startup = function(use)
             })
         end
     }
+
+    use 'rktjmp/lush.nvim'
+    use '~/src/colorscheme-antipathy'
 end
 
 local packer_config = {

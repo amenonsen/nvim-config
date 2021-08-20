@@ -58,38 +58,12 @@ if has('termguicolors')
   set termguicolors
 endif
 
-function! MyHighlights() abort
-    highlight MatchParen ctermbg=black ctermfg=blue
-    highlight Pmenu ctermbg=grey ctermfg=black guibg=#a89984
-    highlight PmenuSel ctermbg=white ctermfg=black guifg=blue
-    highlight NormalFloat guibg=#1f5364
-    highlight FloatBorder guifg=white guibg=#1f2335
-    highlight TreesitterContext guibg=#a89984
-    highlight clear SignColumn
-    highlight clear LspDiagnosticsSignError 
-    highlight clear LspDiagnosticsSignWarning
-    highlight clear LspDiagnosticsSignInformation
-    highlight clear LspDiagnosticsSignHint
-    highlight LspDiagnosticsSignHint ctermfg=darkgrey guifg=#666666
-    highlight GitSignsChange ctermbg=NONE guibg=NONE
-    highlight GitSignsDelete ctermbg=NONE guibg=NONE
-    highlight GitSignsAdd ctermbg=NONE guibg=NONE
-    highlight TelescopeMultiSelection ctermfg=green guifg=green
-endfunction
-
 if !exists("autocmds_loaded")
     let autocmds_loaded = 1
 
     " Restore prior cursor (line) position when reopening a file.
     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
                          \ exe "normal g'\"" | endif
-
-    " Override highlights with my preferences (defined above) when
-    " setting a colorscheme.
-    augroup colours
-        autocmd!
-        autocmd ColorScheme * call MyHighlights()
-    augroup end
 
     autocmd BufNewFile,BufRead *.post set filetype=post
 
@@ -114,6 +88,6 @@ if !exists("autocmds_loaded")
     "autocmd FileType python setlocal foldexpr=nvim_treesitter#foldexpr()
 endif
 
-colorscheme off
+colorscheme antipathy
 
 syntax off
