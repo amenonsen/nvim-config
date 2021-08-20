@@ -151,10 +151,6 @@ local packer_startup = function(use)
         end
     }
 
-    -- Highlight LSP diagnostic signs in the left column sensibly (red
-    -- for error, orange for warning, that sort of thing).
-    use { 'folke/lsp-colors.nvim' }
-
     -- A language server that integrates with external tools like black
     -- and shellcheck, as well as allowing LSP actions to be implemented
     -- in Lua using buffers inside Neovim (without separate processes).
