@@ -90,4 +90,4 @@ endif
 
 colorscheme antipathy
 
-syntax off
+syntax enable
