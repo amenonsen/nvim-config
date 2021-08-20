@@ -782,22 +782,45 @@ local packer_startup = function(use)
         extensions = { 'quickfix', 'fugitive' },
         config = function ()
             -- Get rid of distracting colour changes in the statusline
-            -- altogether, by setting all the backgrounds to the same
-            -- colour in every mode.
-            -- See also https://github.com/hoob3rt/lualine.nvim/blob/master/CONTRIBUTING.md#adding-a-theme
-            local custom_theme = require('lualine.themes.gruvbox')
-            local modes = {
-                'normal', 'insert', 'visual', 'replace', 'command', 'inactive'
+            -- altogether, by starting with gruvbox and setting all the
+            -- backgrounds to the same colour in every mode.
+            local colors = {
+                black = '#282828',
+                beige = '#a89984',
+                white = '#ffffff',
             }
-            for _, k in pairs(modes) do
-                for _, s in pairs({'a','b','c'}) do
-                    custom_theme[k][s].bg = '#a89984'
-                end
-            end
-            custom_theme.normal.b.fg = '#ffeeee'
-            custom_theme.inactive.a.fg = '#666666'
-            custom_theme.inactive.b.bg = custom_theme.normal.b.fg
-            custom_theme.inactive.c.bg = custom_theme.normal.c.fg
+            local custom_theme = {
+                normal = {
+                    a = {bg = colors.beige, fg = colors.black, gui = 'bold'},
+                    b = {bg = colors.beige, fg = colors.white},
+                    c = {bg = colors.beige, fg = colors.black}
+                },
+                insert = {
+                    a = {bg = colors.beige, fg = colors.black, gui = 'bold'},
+                    b = {bg = colors.beige, fg = colors.white},
+                    c = {bg = colors.beige, fg = colors.black}
+                },
+                visual = {
+                    a = {bg = colors.beige, fg = colors.black, gui = 'bold'},
+                    b = {bg = colors.beige, fg = colors.white},
+                    c = {bg = colors.beige, fg = colors.black}
+                },
+                replace = {
+                    a = {bg = colors.beige, fg = colors.black, gui = 'bold'},
+                    b = {bg = colors.beige, fg = colors.white},
+                    c = {bg = colors.beige, fg = colors.black}
+                },
+                command = {
+                    a = {bg = colors.beige, fg = colors.black, gui = 'bold'},
+                    b = {bg = colors.beige, fg = colors.white},
+                    c = {bg = colors.beige, fg = colors.black}
+                },
+                inactive = {
+                    a = {bg = colors.beige, fg = "#555555", gui = 'bold'},
+                    b = {bg = colors.beige, fg = colors.white},
+                    c = {bg = colors.beige, fg = colors.black}
+                }
+            }
 
             require('lualine').setup({
                 options = {
@@ -818,9 +841,7 @@ local packer_startup = function(use)
                     lualine_z = {'location'}
                 },
                 inactive_sections = {
-                   lualine_a = {
-                        { 'filename', path = 1 }
-                    },
+                    lualine_a = { 'filename' },
                     lualine_b = {},
                     lualine_c = {},
                     lualine_x = {},
