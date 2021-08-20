@@ -60,7 +60,6 @@ local packer_startup = function(use)
             -- functionality after the language server and buffer are
             -- attached.
             local on_attach = function(client, bufnr)
-                local function buf_nmap(...) vim.api.nvim_buf_set_keymap(bufnr, 'n', ...) end
                 local function buf_setopt(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
                 buf_setopt('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -339,7 +338,6 @@ local packer_startup = function(use)
         },
         config = function ()
             local telescope = require('telescope')
-            local actions = require("telescope.actions")
             telescope.setup({
                 defaults = {
                     mappings = {
@@ -443,7 +441,7 @@ local packer_startup = function(use)
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
                     }),
-                    ['<Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(core, fallback)
+                    ['<Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
                         if vim.fn.pumvisible() == 1 then
                             vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
                         elseif luasnip.expand_or_jumpable() then
@@ -452,7 +450,7 @@ local packer_startup = function(use)
                             fallback()
                         end
                     end),
-                    ['<S-Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(core, fallback)
+                    ['<S-Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
                         if vim.fn.pumvisible() == 1 then
                             vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
                         elseif luasnip.jumpable(-1) then
@@ -477,7 +475,7 @@ local packer_startup = function(use)
     use {
         'hrsh7th/cmp-nvim-lsp',
         config = function()
-            require('cmp_nvim_lsp').setup({})
+            require('cmp_nvim_lsp').setup()
         end
     }
 
