@@ -369,7 +369,6 @@ local packer_startup = function(use)
             require('luasnip').config.setup({
                 store_selection_keys = "<Tab>"
             })
-            require('config.luasnip')
         end
     }
 
@@ -840,9 +839,10 @@ local packer_startup = function(use)
 end
 
 local packer_config = {
+    compile_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim/plugin/packer_compiled.lua',
     git = {
         clone_timeout = 1200,
     }
 }
 
-return require('packer').startup({ packer_startup, packer_config })
+return require('packer').startup({ packer_startup, config = packer_config })
