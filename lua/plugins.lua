@@ -102,6 +102,10 @@ local packer_startup = function(use)
                     },
                 }, { buffer = bufnr })
 
+                require('which-key').register({
+                    ["FF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
+                }, { mode = "v", buffer = bufnr })
+
                 require('aerial').on_attach(client)
             end
 
