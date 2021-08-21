@@ -873,6 +873,11 @@ end
 
 local packer_config = {
     compile_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim/plugin/packer_compiled.lua',
+    display = {
+        open_fn = function()
+            return require('packer.util').float({ border = 'single' })
+        end
+    },
     git = {
         clone_timeout = 1200,
     }
