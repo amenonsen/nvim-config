@@ -370,15 +370,15 @@ local packer_startup = function(use)
                     "<cmd>lua require('telescope-files').project_files()<CR>",
                     "Find files",
                 },
-                ["<C-b>"] = { "<cmd>Telescope buffers<CR>", "Buffers" },
+                ["<C-b>"] = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "Buffers" },
                 ["<C-g>"] = {
                     "<cmd>lua require('telescope.builtin').live_grep({sorter=require('telescope.sorters').empty()})<CR>",
                     "Live grep"
                 },
                 ["T"] = {
                     name = "+Telescope",
-                    ["T"] = { "<cmd>Telescope builtin<CR>", "Builtins" },
-                    h = { "<cmd>Telescope help_tags<CR>", "Help tags" },
+                    ["T"] = { "<cmd>lua require('telescope.builtin').builtin()<CR>", "Builtins" },
+                    h = { "<cmd>lua require('telescope.builtin').help_tags()<CR>", "Help tags" },
                 },
             })
         end
