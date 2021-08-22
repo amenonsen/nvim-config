@@ -49,6 +49,7 @@ set completeopt-=preview
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
 "set formatlistpat="^\s*(*\d\+[.)] "
 set updatetime=1000 timeoutlen=1000
+set cursorline signcolumn=yes:2
 
 if executable("rg")
     set grepprg=rg\ --vimgrep
