@@ -417,9 +417,9 @@ local packer_startup = function(use)
                     end
                 },
                 sources = {
-                    { name = 'buffer' },
-                    { name = 'luasnip' },
                     { name = 'nvim_lsp' },
+                    { name = 'luasnip' },
+                    { name = 'buffer' },
                 },
                 mapping = {
                     ['<C-p>'] = cmp.mapping.prev_item(),
@@ -464,13 +464,8 @@ local packer_startup = function(use)
     -- Completion sources for nvim-cmp.
     use {
         { 'saadparwaiz1/cmp_luasnip' },
+        { 'hrsh7th/cmp-nvim-lsp' },
         { 'hrsh7th/cmp-buffer' },
-    }
-    use {
-        'hrsh7th/cmp-nvim-lsp',
-        config = function()
-            require('cmp_nvim_lsp').setup()
-        end
     }
 
     -- Makes it easier to input and identify Unicode characters and
