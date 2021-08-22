@@ -222,13 +222,21 @@ local packer_startup = function(use)
                     enable_autocmd = false,
                 },
                 highlight = {
-                    enable = false,
-                    disable = { "c", "rust" },
+                    enable = true,
                     additional_vim_regex_highlighting = false,
                     custom_captures = {},
                 },
                 indent = {
-                    enable = false,
+                    enable = true,
+                },
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {
+                        init_selection = "gnn",
+                        node_incremental = "<CR>",
+                        node_decremental = "<BS>",
+                        scope_incremental = "grc",
+                    }
                 },
                 textobjects = {
                     select = {
