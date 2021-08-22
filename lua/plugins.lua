@@ -836,7 +836,34 @@ local packer_startup = function(use)
                     lualine_a = {
                         { 'filename', path = 1 }
                     },
-                    lualine_b = {require('nvim-treesitter').statusline},
+                    lualine_b = {
+                        function()
+                            local transforms = {
+                                python = function(s)
+                                    -- "class Xyzzy(object):" → "Xyzzy"
+                                    if s:find("class ") then
+                                        s = s:gsub("class ", ""):gsub("%([^%)]*%):", "")
+                                        -- "def fn(a,r,g,s) -> r:" → "fn()"
+                                    elseif s:find("def ") then
+                                        s = s:gsub("def ", ""):gsub("%([^%)]*%)", "()"):gsub("%).*:", ")")
+                                    end
+                                    return s
+                                end,
+                                lua = function(s)
+                                    return s:gsub(" *{$", ""):gsub("%($", "")
+                                end
+                            }
+
+                            return require('nvim-treesitter').statusline({
+                                indicator_size = 100,
+                                type_patterns = {'class', 'function', 'method'},
+                                transform_fn = transforms[vim.o.filetype] or function(s)
+                                    return s
+                                end,
+                                separator = ' → ',
+                            })
+                        end
+                    },
                     lualine_c = {},
                     lualine_x = {},
                     lualine_y = {'branch'},
