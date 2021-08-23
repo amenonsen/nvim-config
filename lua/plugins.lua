@@ -562,17 +562,9 @@ local packer_startup = function(use)
         'lewis6991/gitsigns.nvim',
         config = function()
             require('gitsigns').setup({
-                signs = {
-                    add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-                    change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-                    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-                },
                 numhl = false,
                 linehl = false,
                 keymaps = {
-                    -- Default keymap options
                     noremap = true,
 
                     ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
@@ -587,7 +579,6 @@ local packer_startup = function(use)
                     ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
                     ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
 
-                    -- Text objects
                     ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
                     ['x ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>'
                 },
@@ -596,11 +587,7 @@ local packer_startup = function(use)
                     follow_files = true
                 },
                 current_line_blame = false,
-                current_line_blame_delay = 1000,
-                current_line_blame_position = 'eol',
-                sign_priority = 6,
-                update_debounce = 100,
-                status_formatter = nil,
+                update_debounce = 250,
                 word_diff = false,
                 use_internal_diff = true,
             })
