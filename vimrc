@@ -1,15 +1,19 @@
-" Plugins have already been loaded and configured in plugins.lua by the
-" time we reach here.
+" Plugins configured in lua/plugins.lua have already been loaded from
+" .local/share/nvim/site/pack/*/start by the time we reach here.
 
 let mapleader = " "
 
-" We can't use splice.vim and fugitive together, but we need the former
-" only if we are invoked as a git mergetool.
-if v:argv[-1] == "SpliceInit"
-    packadd splice.vim
-else
-    packadd vim-fugitive
-endif
+set nocp ai hidden ruler showcmd terse writeany autowrite smarttab expandtab
+set incsearch nohlsearch ignorecase smartcase nofoldenable nojs noshowmatch
+set title titlestring= ttyfast vb t_Co=256 t_ti= t_te= t_vb= scrolloff=5
+set tw=72 bs=1 history=1000 report=1 tags=tags background=dark t_Co=256
+set mouse=a tabstop=8 shiftwidth=4 formatoptions=tcqnlj
+set backupdir=~/tmp,.,~/ directory=~/tmp,.,~/
+set spelllang=en_gb dictionary=/usr/share/dict/words complete=.,w,b,u,t,i,k,kspell,k~/.ispell_english
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
+"set formatlistpat="^\s*(*\d\+[.)] "
+set updatetime=1000 timeoutlen=1000
+set cursorline signcolumn=yes:2
 
 " Neovim doesn't support clipboard=autoselect; the best we can do is to
 " make mouse selections yank into "* when you click+drag+release. See
@@ -19,6 +23,22 @@ if !has('nvim')
     set clipboard+=autoselect
 else
     vmap <LeftRelease> "*ygv
+endif
+
+if has('termguicolors')
+  set termguicolors
+endif
+
+if executable("rg")
+    set grepprg=rg\ --vimgrep
+endif
+
+" We can't use splice.vim and fugitive together, but we need the former
+" only if we are invoked as a git mergetool.
+if v:argv[-1] == "SpliceInit"
+    packadd splice.vim
+else
+    packadd vim-fugitive
 endif
 
 " In insert mode, correct the last spelling error with the first
@@ -37,27 +57,9 @@ map ' `
 
 filetype plugin indent on
 
-set nocp ai hidden ruler showcmd terse writeany autowrite smarttab expandtab
-set incsearch nohlsearch ignorecase smartcase nofoldenable nojs noshowmatch
-set title titlestring= ttyfast vb t_Co=256 t_ti= t_te= t_vb= scrolloff=5
-set tw=72 bs=1 history=1000 report=1 tags=tags background=dark t_Co=256
-set mouse=a tabstop=8 shiftwidth=4 formatoptions=tcqnlj
-set undofile backupdir=~/tmp,.,~/ directory=~/tmp,.,~/
-set spelllang=en_gb dictionary=/usr/share/dict/words complete=.,w,b,u,t,i,k,kspell,k~/.ispell_english
-set completeopt=menuone,noselect
-set completeopt-=preview
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
-"set formatlistpat="^\s*(*\d\+[.)] "
-set updatetime=1000 timeoutlen=1000
-set cursorline signcolumn=yes:2
+colorscheme antipathy
 
-if executable("rg")
-    set grepprg=rg\ --vimgrep
-endif
-
-if has('termguicolors')
-  set termguicolors
-endif
+syntax enable
 
 if !exists("autocmds_loaded")
     let autocmds_loaded = 1
@@ -84,14 +86,7 @@ if !exists("autocmds_loaded")
 
     autocmd FileType yaml setlocal nosmartindent indentexpr= indentkeys= sw=2 ts=2 sts=2 et
     autocmd FileType html,xml setlocal nosmartindent indentexpr= indentkeys= sw=2 ts=2 sts=2 et
-
-    " Tree-sitter based folding seems to work, but I don't use it much.
-    " There's also an lsp-based version at 'pierreglaser/folding-nvim'.
-    "
-    "autocmd FileType python setlocal foldmethod=expr
-    "autocmd FileType python setlocal foldexpr=nvim_treesitter#foldexpr()
 endif
 
-colorscheme antipathy
-
-syntax enable
+nmap :q<CR> <cmd>echo "nope"<CR>
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
