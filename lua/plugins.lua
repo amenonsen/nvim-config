@@ -896,7 +896,7 @@ local packer_startup = function(use)
 end
 
 local packer_config = {
-    compile_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim/plugin/packer_compiled.lua',
+    compile_path = vim.fn.stdpath('data') .. '/site/pack/loader/start/packer.nvim/plugin/packer_compiled.lua',
     display = {
         open_fn = function()
             return require('packer.util').float({ border = 'single' })
