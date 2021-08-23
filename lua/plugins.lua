@@ -213,6 +213,7 @@ local packer_startup = function(use)
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
             'JoosepAlviste/nvim-ts-context-commentstring',
+            'nvim-treesitter/playground',
         },
         config = function()
             require('nvim-treesitter.configs').setup({
@@ -290,6 +291,9 @@ local packer_startup = function(use)
                         },
                     },
                 },
+                playground = {
+                    enable = true,
+                }
             })
         end
     }
