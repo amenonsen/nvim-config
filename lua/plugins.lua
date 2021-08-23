@@ -328,7 +328,7 @@ local packer_startup = function(use)
     -- Displays class/function/block context at the top of the screen while
     -- scrolling through source code. Like context.vim.
     use {
-        'romgrk/nvim-treesitter-context', after = { 'nvim-treesitter' },
+        'romgrk/nvim-treesitter-context',
         config = function()
             require('treesitter-context').setup({
                 enable = true,
@@ -497,7 +497,7 @@ local packer_startup = function(use)
 
     -- Displays undo history visually.
     use {
-        'simnalamburt/vim-mundo', cmd = 'MundoToggle',
+        'simnalamburt/vim-mundo',
         config = function()
             vim.g.mundo_right = 1
         end
@@ -707,7 +707,7 @@ local packer_startup = function(use)
         end
     }
     use {
-        'mfussenegger/nvim-dap-python', after = { "nvim-dap" },
+        'mfussenegger/nvim-dap-python',
         config = function()
             local dappy = require('dap-python')
             dappy.setup('~/.virtualenvs/debugpy/bin/python')
@@ -717,7 +717,7 @@ local packer_startup = function(use)
 
     -- Uses virtual text to display context information with nvim-dap.
     use {
-        'theHamsta/nvim-dap-virtual-text', after = { 'nvim-dap' },
+        'theHamsta/nvim-dap-virtual-text',
         config = function()
             vim.g.dap_virtual_text = true
         end
@@ -725,7 +725,7 @@ local packer_startup = function(use)
 
     -- Provides a basic debugger UI for nvim-dap
     use {
-        "rcarriga/nvim-dap-ui", after = { 'nvim-dap' },
+        "rcarriga/nvim-dap-ui",
         config = function()
             require('dapui').setup({
             })
@@ -740,7 +740,7 @@ local packer_startup = function(use)
 
     -- Provides a Telescope interface to nvim-dap functionality.
     use {
-        'nvim-telescope/telescope-dap.nvim', after = { 'nvim-dap' },
+        'nvim-telescope/telescope-dap.nvim',
         config = function()
             require('telescope').load_extension('dap')
         end
@@ -748,41 +748,35 @@ local packer_startup = function(use)
 
     -- Integrates with vim-test and nvim-dap to run tests.
     use {
-        { 'vim-test/vim-test', ft = { 'python' } },
-        {
-            "rcarriga/vim-ultest", after = { "vim-test" },
-            run = function ()
-                vim.cmd[[packadd vim-test vim-ultest]]
-                vim.cmd[[UpdateRemotePlugins]]
-            end,
-            config = function()
-                require("ultest").setup({
-                    builders = {
-                        ['python#pytest'] = function (cmd)
-                            local non_modules = {'python', 'pipenv', 'poetry'}
-                            local module_index = 1
-                            if vim.tbl_contains(non_modules, cmd[1]) then
-                                module_index = 3
-                            end
-                            local module = cmd[module_index]
-                            local args = vim.list_slice(cmd, module_index + 1)
-                            return {
-                                dap = {
-                                    type = 'python',
-                                    request = 'launch',
-                                    module = module,
-                                    args = args
-                                }
-                            }
+        "rcarriga/vim-ultest", run = ":UpdateRemotePlugins",
+        requires = { 'vim-test/vim-test' },
+        config = function()
+            require("ultest").setup({
+                builders = {
+                    ['python#pytest'] = function (cmd)
+                        local non_modules = {'python', 'pipenv', 'poetry'}
+                        local module_index = 1
+                        if vim.tbl_contains(non_modules, cmd[1]) then
+                            module_index = 3
                         end
-                    }
-                })
-                require('which-key').register({
-                    ["[t"] = { "<Plug>(ultest-prev-fail)", "Prev test failure" },
-                    ["]t"] = { "<Plug>(ultest-next-fail)", "Next test failure" },
-                })
-            end
-        }
+                        local module = cmd[module_index]
+                        local args = vim.list_slice(cmd, module_index + 1)
+                        return {
+                            dap = {
+                                type = 'python',
+                                request = 'launch',
+                                module = module,
+                                args = args
+                            }
+                        }
+                    end
+                }
+            })
+            require('which-key').register({
+                ["[t"] = { "<Plug>(ultest-prev-fail)", "Prev test failure" },
+                ["]t"] = { "<Plug>(ultest-next-fail)", "Next test failure" },
+            })
+        end
     }
 
     -- Lightweight statusbar configuration plugin and (optional) icons to use
