@@ -190,10 +190,6 @@ local packer_startup = function(use)
                     additional_vim_regex_highlighting = false,
                     custom_captures = {},
                 },
-                indent = {
-                    enable = true,
-                    disable = { 'yaml' }
-                },
                 incremental_selection = {
                     enable = true,
                     keymaps = {
