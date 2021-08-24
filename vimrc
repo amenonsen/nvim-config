@@ -13,7 +13,7 @@ set spelllang=en_gb dictionary=/usr/share/dict/words complete=.,w,b,u,t,i,k,kspe
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
 "set formatlistpat="^\s*(*\d\+[.)] "
 set updatetime=1000 timeoutlen=1000
-set cursorline signcolumn=yes:2
+set cursorline signcolumn=yes:1
 
 " Neovim doesn't support clipboard=autoselect; the best we can do is to
 " make mouse selections yank into "* when you click+drag+release. See
