@@ -828,6 +828,12 @@ local packer_startup = function(use)
         end
     }
 
+    use {
+        'oberblastmeister/neuron.nvim', branch = 'unstable',
+        config = function()
+            require('neuron').setup()
+        end
+    }
 end
 
 local packer_config = {
