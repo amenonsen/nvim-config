@@ -715,7 +715,6 @@ local packer_startup = function(use)
         requires = {
             'kyazdani42/nvim-web-devicons',
         },
-        extensions = { 'quickfix', 'fugitive' },
         config = function ()
             -- Get rid of distracting colour changes in the statusline
             -- altogether, by starting with gruvbox and setting all the
@@ -815,7 +814,7 @@ local packer_startup = function(use)
                     lualine_z = {},
                 },
                 tabline = {},
-                extensions = {}
+                extensions = { 'quickfix', 'fugitive' },
             })
         end
     }
