@@ -802,6 +802,14 @@ local packer_startup = function(use)
                     return function(s) return s end
                 end
             })
+            local ts_statusline_transformed = function()
+                return require('nvim-treesitter').statusline({
+                    indicator_size = 100,
+                    type_patterns = {'class', 'function', 'method'},
+                    transform_fn = ts_stat_transforms[vim.o.filetype],
+                    separator = ' → ',
+                })
+            end
 
             require('lualine').setup({
                 options = {
@@ -812,19 +820,8 @@ local packer_startup = function(use)
                     disabled_filetypes = {}
                 },
                 sections = {
-                    lualine_a = {
-                        { 'filename', path = 1 }
-                    },
-                    lualine_b = {
-                        function()
-                            return require('nvim-treesitter').statusline({
-                                indicator_size = 100,
-                                type_patterns = {'class', 'function', 'method'},
-                                transform_fn = ts_stat_transforms[vim.o.filetype],
-                                separator = ' → ',
-                            })
-                        end
-                    },
+                    lualine_a = { { 'filename', path = 1 } },
+                    lualine_b = { ts_statusline_transformed },
                     lualine_c = {},
                     lualine_x = {},
                     lualine_y = {'branch'},
