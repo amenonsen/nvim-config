@@ -113,8 +113,7 @@ local packer_startup = function(use)
             }
 
             local servers = {
-                "clangd", "pyright", "jedi_language_server", "bashls",
-                "jsonls", "cssls", "html"
+                "clangd", "pyright", "bashls", "jsonls", "cssls", "html"
             }
 
             for _, ls in ipairs(servers) do
