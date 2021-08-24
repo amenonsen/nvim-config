@@ -84,7 +84,6 @@ if !exists("autocmds_loaded")
     autocmd FileType mail nnoremap <buffer> LR :s/\[[^]]*\] \([Rr][Ee]: \)* *//<CR>
     autocmd FileType mail nnoremap <buffer> TC ddpcwCck0cwTo0
 
-    autocmd FileType yaml setlocal nosmartindent indentexpr= indentkeys= sw=2 ts=2 sts=2 et
     autocmd FileType html,xml setlocal nosmartindent indentexpr= indentkeys= sw=2 ts=2 sts=2 et
 endif
 
