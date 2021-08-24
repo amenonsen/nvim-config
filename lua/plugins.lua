@@ -284,18 +284,6 @@ local packer_startup = function(use)
         end
     }
 
-    -- Displays class/function/block context at the top of the screen while
-    -- scrolling through source code. Like context.vim.
-    use {
-        'romgrk/nvim-treesitter-context',
-        config = function()
-            require('treesitter-context').setup({
-                enable = true,
-                throttle = true,
-            })
-        end
-    }
-
     -- Configurable fuzzy-finder over lists (like fzf, but without the
     -- dependency on an external binary), with various plugins.
     use {
