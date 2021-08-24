@@ -164,6 +164,17 @@ local packer_startup = function(use)
         end,
     }
 
+    -- Displays function signature help as virtual text.
+    use {
+        'ray-x/lsp_signature.nvim',
+        config = function()
+            require("lsp_signature").setup({
+                floating_window = false,
+                hint_prefix = "■ ",
+            })
+        end
+    }
+
     -- A Neovim interface to the tree-sitter incremental parser library, to
     -- enable syntax-aware highlighting, text object definitions, and other
     -- features (instead of using the traditional regex-based hacks).
