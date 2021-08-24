@@ -123,7 +123,23 @@ local packer_startup = function(use)
                     on_attach = on_attach,
                     flags = {
                         debounce_text_changes = 500,
-                    }
+                    },
+                    root_dir = function(fname)
+                        local util = require('lspconfig.util')
+                        local root_files = {
+                            '.git', '.vimrc', 'setup.py', 'setup.cfg',
+                            'pyrightconfig.json', 'pyproject.toml',
+                            'requirements.txt', 'package.json',
+                            'compile_commands.json', 'Jamfile',
+                            'Makefile', 'compile_flags.txt',
+                        }
+                        local root = util.root_pattern(unpack(root_files))(fname) or util.path.dirname(filename)
+                        local bits = vim.split(root, '/')
+                        if root == vim.loop.os_homedir() or bits[2] ~= "home" or #bits < 5 then
+                            root = nil
+                        end
+                        return root
+                    end
                 })
             end
 
