@@ -846,6 +846,29 @@ local packer_startup = function(use)
             require('neuron').setup()
         end
     }
+
+    use {
+        'folke/persistence.nvim',
+        config = function()
+            -- DON'T call require('persistence').setup() here, because
+            -- it will call persistence.start(), which will set up the
+            -- auto-save behaviour that we don't want.
+            require('persistence.config').setup()
+            require('which-key').register({
+                ["\\s"] = {
+                    name = "+Sessions",
+                    ["s"] = {
+                        "<cmd>lua require('persistence').save()<CR>",
+                        "Save session",
+                    },
+                    ["l"] = {
+                        "<cmd>lua require('persistence').load({last = true})<CR>",
+                        "Load session",
+                    }
+                }
+            })
+        end
+    }
 end
 
 local packer_config = {
