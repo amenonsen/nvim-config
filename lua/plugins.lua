@@ -418,8 +418,8 @@ local packer_startup = function(use)
                     { name = 'buffer' },
                 },
                 mapping = {
-                    ['<C-p>'] = cmp.mapping.prev_item(),
-                    ['<C-n>'] = cmp.mapping.next_item(),
+                    ['<C-p>'] = cmp.mapping.select_prev_item(),
+                    ['<C-n>'] = cmp.mapping.select_next_item(),
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<BS>'] = cmp.mapping.close(),
                     ['<Esc>'] = cmp.mapping.close(),
