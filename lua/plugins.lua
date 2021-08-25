@@ -431,7 +431,7 @@ local packer_startup = function(use)
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
                     }),
-                    ['<Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
+                    ['<Tab>'] = cmp.mapping(function(fallback)
                         if vim.fn.pumvisible() == 1 then
                             vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
                         elseif luasnip.jumpable(1) then
@@ -439,8 +439,8 @@ local packer_startup = function(use)
                         else
                             fallback()
                         end
-                    end),
-                    ['<S-Tab>'] = cmp.mapping.mode({ 'i', 's' }, function(_, fallback)
+                    end, { 'i', 's' }),
+                    ['<S-Tab>'] = cmp.mapping(function(fallback)
                         if vim.fn.pumvisible() == 1 then
                             vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
                         elseif luasnip.jumpable(-1) then
@@ -448,7 +448,7 @@ local packer_startup = function(use)
                         else
                             fallback()
                         end
-                    end)
+                    end, { 'i', 's' }),
                 },
             })
 
