@@ -112,12 +112,42 @@ local packer_startup = function(use)
                 }
             }
 
+            local sumneko_dir = '/home/ams/build/lua-language-server'
+            local sumneko_binary = sumneko_dir .. '/bin/Linux/lua-language-server'
+            local runtime_path = vim.split(package.path, ';')
+            table.insert(runtime_path, "lua/?.lua")
+            table.insert(runtime_path, "lua/?/init.lua")
+
             local servers = {
-                "clangd", "pyright", "bashls", "jsonls", "cssls", "html"
+                clangd = {}, pyright = {}, bashls = {},
+                jsonls = {}, cssls = {}, html = {},
+                sumneko_lua = {
+                    cmd = {sumneko_binary, "-E", sumneko_dir .. "/main.lua"};
+                    settings = {
+                        Lua = {
+                            runtime = {
+                                version = 'LuaJIT',
+                                path = runtime_path,
+                            },
+                            completion = {
+                                callSnippet = "Both",
+                            },
+                            diagnostics = {
+                                globals = {'vim'},
+                            },
+                            workspace = {
+                                library = vim.api.nvim_get_runtime_file("", true),
+                            },
+                            telemetry = {
+                                enable = false,
+                            },
+                        },
+                    },
+                },
             }
 
-            for _, ls in ipairs(servers) do
-                nvim_lsp[ls].setup({
+            for ls, overrides in pairs(servers) do
+                local config = {
                     capabilities = capabilities,
                     on_attach = on_attach,
                     flags = {
@@ -132,50 +162,21 @@ local packer_startup = function(use)
                             'compile_commands.json', 'Jamfile',
                             'Makefile', 'compile_flags.txt',
                         }
-                        local root = util.root_pattern(unpack(root_files))(fname) or util.path.dirname(filename)
+                        local root = util.root_pattern(unpack(root_files))(fname) or util.path.dirname(fname)
                         local bits = vim.split(root, '/')
                         if root == vim.loop.os_homedir() or bits[2] ~= "home" or #bits < 5 then
                             root = nil
                         end
                         return root
                     end
-                })
-            end
-
-            local sumneko_dir = '/home/ams/build/lua-language-server'
-            local sumneko_binary = sumneko_dir .. '/bin/Linux/lua-language-server'
-            local runtime_path = vim.split(package.path, ';')
-            table.insert(runtime_path, "lua/?.lua")
-            table.insert(runtime_path, "lua/?/init.lua")
-
-            nvim_lsp.sumneko_lua.setup({
-                cmd = {sumneko_binary, "-E", sumneko_dir .. "/main.lua"};
-                settings = {
-                    Lua = {
-                        runtime = {
-                            version = 'LuaJIT',
-                            path = runtime_path,
-                        },
-                        completion = {
-                            callSnippet = "Both",
-                        },
-                        diagnostics = {
-                            globals = {'vim'},
-                        },
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file("", true),
-                        },
-                        telemetry = {
-                            enable = false,
-                        },
-                    },
-                },
-                capabilities = capabilities,
-                on_attach = on_attach,
-                flags = {
-                    debounce_text_changes = 500,
                 }
-            })
+
+                for k,v in pairs(overrides) do
+                    config[k] = v
+                end
+
+                nvim_lsp[ls].setup(config)
+            end
 
             vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
                 vim.lsp.diagnostic.on_publish_diagnostics, {
