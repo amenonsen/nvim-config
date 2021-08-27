@@ -835,7 +835,9 @@ local packer_startup = function(use)
             -- DON'T call require('persistence').setup() here, because
             -- it will call persistence.start(), which will set up the
             -- auto-save behaviour that we don't want.
-            require('persistence.config').setup()
+            require('persistence.config').setup({
+                dir = vim.fn.stdpath('data')..'/sessions/'
+            })
             require('which-key').register({
                 ["\\s"] = {
                     name = "+Sessions",
@@ -844,7 +846,7 @@ local packer_startup = function(use)
                         "Save session",
                     },
                     ["l"] = {
-                        "<cmd>lua require('persistence').load({last = true})<CR>",
+                        "<cmd>lua require('telescope-sessions').sessions()<CR>",
                         "Load session",
                     }
                 }
