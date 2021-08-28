@@ -413,7 +413,7 @@ local packer_startup = function(use)
         'L3MON4D3/LuaSnip',
         config = function()
             require('luasnip').config.setup({
-                store_selection_keys = "<Tab>"
+                store_selection_keys = "<C-Space>"
             })
         end
     }
