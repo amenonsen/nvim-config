@@ -512,7 +512,6 @@ local packer_startup = function(use)
     require('which-key').register({
         ["\\T"] = {
             name = "+Toggles",
-            A = { "<cmd>AerialToggle<CR>", "Aerial outline" },
             S = { "<cmd>SymbolsOutline<CR>", "Symbols outline" },
             R = { "<cmd>RnvimrToggle<CR>", "Ranger" },
         }
