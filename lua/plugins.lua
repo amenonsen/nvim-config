@@ -245,7 +245,7 @@ local packer_startup = function(use)
             parser_config.perl = {
                 install_info = {
                     url = "~/build/tree-sitter-perl",
-                    files = {"src/parser.c"}
+                    files = {"src/parser.c", "src/scanner.cc"}
                 },
             }
 
