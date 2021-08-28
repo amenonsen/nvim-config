@@ -749,7 +749,7 @@ local packer_startup = function(use)
         end
     }
 
-    -- Lightweight statusbar configuration plugin and (optional) icons to use
+    --[[ -- Lightweight statusbar configuration plugin and (optional) icons to use
     -- in the statusbar.
     use {
         'shadmansaleh/lualine.nvim',
@@ -855,7 +855,9 @@ local packer_startup = function(use)
                 extensions = { 'quickfix', 'fugitive' },
             })
         end
-    }
+    } ]]
+
+    vim.o.statusline = "%#StatusLine# %f %m %#StatusLineINV# %{luaeval('require(\"nvim-treesitter\").statusline()')} %= %#StatusLine# %-l:%-c  "
 
     use {
         'oberblastmeister/neuron.nvim', branch = 'unstable',
