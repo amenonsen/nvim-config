@@ -429,7 +429,7 @@ local packer_startup = function(use)
 
             cmp.setup({
                 completion = {
-                    autocomplete = {},
+                    autocomplete = false,
                     completeopt = 'menu,menuone,noselect',
                     keyword_length = 1,
                 },
