@@ -896,6 +896,15 @@ local packer_startup = function(use)
             })
         end
     }
+
+    use {
+        'ggandor/lightspeed.nvim',
+        config = function()
+            require('lightspeed').setup({
+                grey_out_search_area = false
+            })
+        end
+    }
 end
 
 local packer_config = {
