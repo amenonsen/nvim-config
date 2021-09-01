@@ -112,38 +112,9 @@ local packer_startup = function(use)
                 }
             }
 
-            local sumneko_dir = '/home/ams/build/lua-language-server'
-            local sumneko_binary = sumneko_dir .. '/bin/Linux/lua-language-server'
-            local runtime_path = vim.split(package.path, ';')
-            table.insert(runtime_path, "lua/?.lua")
-            table.insert(runtime_path, "lua/?/init.lua")
-
             local servers = {
                 clangd = {}, pyright = {}, bashls = {},
                 jsonls = {}, cssls = {}, html = {},
-                sumneko_lua = {
-                    cmd = {sumneko_binary, "-E", sumneko_dir .. "/main.lua"};
-                    settings = {
-                        Lua = {
-                            runtime = {
-                                version = 'LuaJIT',
-                                path = runtime_path,
-                            },
-                            completion = {
-                                callSnippet = "Both",
-                            },
-                            diagnostics = {
-                                globals = {'vim'},
-                            },
-                            workspace = {
-                                library = vim.api.nvim_get_runtime_file("", true),
-                            },
-                            telemetry = {
-                                enable = false,
-                            },
-                        },
-                    },
-                },
             }
 
             for ls, overrides in pairs(servers) do
