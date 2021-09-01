@@ -5,9 +5,6 @@ local packer_startup = function(use)
     -- Packer can manage itself.
     use 'wbthomason/packer.nvim'
 
-    -- We must run :PackerCompile every time this configuration is modified.
-    vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
-
     -- If a file is already open in vim somewhere, just switch to that editor
     -- instead of bothering me with a warning about the swapfile. (Depends on
     -- support from the window manager.)
@@ -158,7 +155,10 @@ local packer_startup = function(use)
             )
 
             vim.cmd [[
-                autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+                augroup lsp
+                    autocmd!
+                    autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+                augroup end
             ]]
         end
     }

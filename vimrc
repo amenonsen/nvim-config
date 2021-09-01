@@ -62,8 +62,11 @@ colorscheme antipathy
 
 syntax enable
 
-if !exists("autocmds_loaded")
-    let autocmds_loaded = 1
+augroup vimrc
+    autocmd!
+
+    " Run PackerCompile whenever lua/plugins.lua is saved
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
 
     " Restore prior cursor (line) position when reopening a file.
     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -86,7 +89,7 @@ if !exists("autocmds_loaded")
     autocmd FileType mail nnoremap <buffer> TC ddpcwCck0cwTo0
 
     autocmd FileType html,xml setlocal nosmartindent indentexpr= indentkeys= sw=2 ts=2 sts=2 et
-endif
+augroup END
 
 nmap :q<CR> <cmd>echo "nope"<CR>
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
