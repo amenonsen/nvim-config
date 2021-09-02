@@ -876,23 +876,6 @@ local packer_startup = function(use)
             })
         end
     }
-
-    use {
-        'glacambre/firenvim',
-        run = function() vim.fn['firenvim#install'](0) end,
-        config = function()
-            vim.g.firenvim_config = {
-                globalSettings = { alt = 'all' },
-                localSettings = {
-                    [".*"] = {
-                        cmdline = "neovim",
-                        takeover = "never",
-                        priority = 0,
-                    }
-                }
-            }
-        end
-    }
 end
 
 local packer_config = {
