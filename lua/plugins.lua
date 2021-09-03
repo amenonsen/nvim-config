@@ -55,7 +55,6 @@ local packer_startup = function(use)
                     ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition" },
                     ["gr"] = { "<cmd>lua vim.lsp.buf.references()<CR>", "List references" },
                     ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
-                    ["gi"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation" },
                     ["<C-k>"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
                     ["[e"] = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", "Prev diagnostic" },
                     ["]e"] = { "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Next diagnostic" },
@@ -90,6 +89,7 @@ local packer_startup = function(use)
 
                 require('which-key').register({
                     ["FF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
+                    ["<leader>ca"] = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action" },
                 }, { mode = "v", buffer = bufnr })
             end
 
