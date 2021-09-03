@@ -56,6 +56,8 @@ digraph RU 8377 " ₹
 
 map ' `
 
+let test#python#pytest#file_pattern = '\.py$'
+
 filetype plugin indent on
 
 colorscheme antipathy
