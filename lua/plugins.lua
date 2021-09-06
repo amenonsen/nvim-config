@@ -803,7 +803,7 @@ local packer_startup = function(use)
                     type_patterns = {'class', 'function', 'method'},
                     transform_fn = ts_stat_transforms[vim.o.filetype],
                     separator = ' → ',
-                })
+                }) or ""
             end
 
             require('lualine').setup({
