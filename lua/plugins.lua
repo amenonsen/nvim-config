@@ -837,13 +837,6 @@ local packer_startup = function(use)
     }
 
     use {
-        'oberblastmeister/neuron.nvim', branch = 'unstable',
-        config = function()
-            require('neuron').setup()
-        end
-    }
-
-    use {
         'folke/persistence.nvim',
         config = function()
             -- DON'T call require('persistence').setup() here, because
