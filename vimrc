@@ -70,6 +70,8 @@ augroup vimrc
     " Run PackerCompile whenever lua/plugins.lua is saved
     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
 
+    autocmd User PackerComplete exe "PackerLoad vim-test vim-ultest" | silent UpdateRemotePlugins
+
     " Restore prior cursor (line) position when reopening a file.
     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
                          \ exe "normal g'\"" | endif

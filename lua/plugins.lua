@@ -570,7 +570,7 @@ local packer_startup = function(use)
     -- support for the Debug Adapter Protocol (and requires an adapter
     -- per language to be debugged).
     use {
-        'mfussenegger/nvim-dap',
+        'mfussenegger/nvim-dap', ft = { 'python' },
         config = function()
             local dap = require('dap')
             local repl = require('dap.repl')
@@ -627,7 +627,7 @@ local packer_startup = function(use)
         end
     }
     use {
-        'mfussenegger/nvim-dap-python',
+        'mfussenegger/nvim-dap-python', after = { 'nvim-dap' },
         config = function()
             local dappy = require('dap-python')
             dappy.setup('~/.virtualenvs/debugpy/bin/python')
@@ -637,7 +637,7 @@ local packer_startup = function(use)
 
     -- Uses virtual text to display context information with nvim-dap.
     use {
-        'theHamsta/nvim-dap-virtual-text',
+        'theHamsta/nvim-dap-virtual-text', after = { 'nvim-dap' },
         config = function()
             vim.g.dap_virtual_text = true
         end
@@ -645,10 +645,9 @@ local packer_startup = function(use)
 
     -- Provides a basic debugger UI for nvim-dap
     use {
-        "rcarriga/nvim-dap-ui",
+        "rcarriga/nvim-dap-ui", after = { 'nvim-dap' },
         config = function()
-            require('dapui').setup({
-            })
+            require('dapui').setup({})
             require('which-key').register({
                 ["\\D"] = {
                     "<cmd>setlocal number<CR><cmd>lua require('dapui').toggle()<CR>",
@@ -660,16 +659,17 @@ local packer_startup = function(use)
 
     -- Provides a Telescope interface to nvim-dap functionality.
     use {
-        'nvim-telescope/telescope-dap.nvim',
+        'nvim-telescope/telescope-dap.nvim', after = { 'nvim-dap' },
         config = function()
             require('telescope').load_extension('dap')
         end
     }
 
     -- Integrates with vim-test and nvim-dap to run tests.
+    use { 'vim-test/vim-test', ft = { 'python' } }
     use {
-        "rcarriga/vim-ultest", run = ":UpdateRemotePlugins",
-        requires = { 'vim-test/vim-test' },
+        "rcarriga/vim-ultest", after = { 'vim-test' },
+        run = ":UpdateRemotePlugins",
         config = function()
             require("ultest").setup({
                 builders = {
