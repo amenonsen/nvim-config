@@ -541,59 +541,30 @@ local packer_startup = function(use)
     use {
         'lewis6991/gitsigns.nvim',
         config = function()
-            require('gitsigns').setup({
-                numhl = false,
-                linehl = false,
-                keymaps = {
-                    noremap = true,
-
-                    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
-                    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
-
-                    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-                    ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-                    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-                    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-                    ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-                    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-                    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-                    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
-
-                    ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-                    ['x ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>'
-                },
-                watch_index = {
-                    interval = 1000,
-                    follow_files = true
-                },
-                current_line_blame = false,
-                update_debounce = 250,
-                word_diff = false,
-                use_internal_diff = true,
-            })
-
-            require('which-key').register({
-                ["[c"] = { "Prev hunk" },
-                ["]c"] = { "Next hunk" },
-                ["<leader>h"] = {
-                    name = "+Hunk",
-                    s = { "Stage hunk" },
-                    u = { "Unstage hunk" },
-                    r = { "Reset hunk" },
-                    R = { "Reset buffer" },
-                    p = { "Preview hunk" },
-                    b = { "Blame line" },
-                },
-            }, { mode = "n" })
-            require('which-key').register({
-                ["<leader>h"] = {
-                    name = "+Hunk",
-                    s = { "Stage hunk" },
-                    r = { "Reset hunk" },
-                },
-            }, { mode = "v" })
+            require('gitsigns').setup()
         end
     }
+
+    require('which-key').register({
+        ["[c"] = { "Prev hunk" },
+        ["]c"] = { "Next hunk" },
+        ["<leader>h"] = {
+            name = "+Hunk",
+            s = { "Stage hunk" },
+            u = { "Unstage hunk" },
+            r = { "Reset hunk" },
+            R = { "Reset buffer" },
+            p = { "Preview hunk" },
+            b = { "Blame line" },
+        },
+    }, { mode = "n" })
+    require('which-key').register({
+        ["<leader>h"] = {
+            name = "+Hunk",
+            s = { "Stage hunk" },
+            r = { "Reset hunk" },
+        },
+    }, { mode = "v" })
 
     -- Supports Python debugging using debugpy and nvim-dap, which adds
     -- support for the Debug Adapter Protocol (and requires an adapter
