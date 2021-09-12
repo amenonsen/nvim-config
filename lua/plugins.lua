@@ -18,6 +18,9 @@ local packer_startup = function(use)
     -- quotes, open/close <tags>, etc. (e.g., cs"', ysiw")
     use 'tpope/vim-surround'
 
+    -- Conservatively insert matching ending bracket(s) only on <CR>.
+    use 'rstacruz/vim-closer'
+
     -- Key mapping manager (supersedes junegunn/vim-peekaboo and has a lot more
     -- functionality, like displaying applicable mappings after partial input).
     use {
