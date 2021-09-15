@@ -784,8 +784,8 @@ local packer_startup = function(use)
                 options = {
                     theme = custom_theme,
                     icons_enabled = false,
-                    component_separators = {'', ''},
-                    section_separators = {'', ''},
+                    component_separators = { left = '', right = '' },
+                    section_separators = { left = '', right = '' },
                     disabled_filetypes = {}
                 },
                 sections = {
