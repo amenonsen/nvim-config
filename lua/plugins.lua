@@ -392,8 +392,6 @@ local packer_startup = function(use)
             cmp.setup({
                 completion = {
                     autocomplete = false,
-                    completeopt = 'menu,menuone,noselect',
-                    keyword_length = 1,
                 },
                 snippet = {
                     expand = function(args)
