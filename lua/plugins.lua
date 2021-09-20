@@ -454,60 +454,52 @@ local packer_startup = function(use)
     -- digraphs. <C-x><C-z> in insert mode completes based on the name
     -- of the unicode character, :Digraphs xxx searches digraphs for
     -- matches.
-    use {
-        'chrisbra/unicode.vim',
-        config = function()
-            require('which-key').register({
-                ga = { "<Plug>(UnicodeGA)", "Identify character" }
-            })
-        end
-    }
+    use 'chrisbra/unicode.vim'
 
     -- Displays a "minimap"-style split display of classes/functions,
     -- but unlike Tagbar (which is unmaintained), these plugins are
     -- based on LSP symbols.
     use {
-        'simrat39/symbols-outline.nvim'
+        'simrat39/symbols-outline.nvim', cmd = "SymbolsOutline"
     }
 
     -- Unlike NERDTree and NvimTree, Rnvimr uses RPC to communicate with
     -- Ranger, thus inheriting all of its file management functionality.
     use {
-        'kevinhwang91/rnvimr'
+        'kevinhwang91/rnvimr', cmd = "RnvimrToggle"
     }
 
-    -- Add mappings to toggle all of the above plugins.
-    require('which-key').register({
-        ["\\T"] = {
-            name = "+Toggles",
-            S = { "<cmd>SymbolsOutline<CR>", "Symbols outline" },
-            R = { "<cmd>RnvimrToggle<CR>", "Ranger" },
-        }
-    })
-
-    -- Provides a Telescope-based interface to the github cli. More complete
-    -- than nvim-telescope/telescope-github.nvim (e.g., access to comments).
+    -- Displays an interactive tree of changes to undo
     use {
-        'pwntester/octo.nvim',
-        config = function()
-            require('octo').setup({})
-        end
+        'mbbill/undotree', cmd = "UndotreeToggle"
     }
 
     -- Ask Sourcetrail to open the current symbol in the IDE or, conversely,
     -- accept requests from Sourcetrail to open a particular symbol in vim.
     use {
-        'CoatiSoftware/vim-sourcetrail',
+        'CoatiSoftware/vim-sourcetrail', keys = "\\S"
+    }
+
+    -- Provides a Telescope-based interface to the github cli. More complete
+    -- than nvim-telescope/telescope-github.nvim (e.g., access to comments).
+    use {
+        'pwntester/octo.nvim', cmd = "Octo",
         config = function()
-            require('which-key').register({
-                ["\\S"] = {
-                    name = "+Sourcetrail",
-                    r = { "<cmd>SourcetrailRefresh<CR>", "Start/refresh connection" },
-                    a = { "<cmd>SourcetrailActivateToken<CR>", "Activate current token" },
-                },
-            })
+            require('octo').setup({})
         end
     }
+
+    require('which-key').register({
+        ga = { "<Plug>(UnicodeGA)", "Identify character" },
+        ["\\R"] = { "<cmd>RnvimrToggle<CR>", "Ranger" },
+        ["\\M"] = { "<cmd>SymbolsOutline<CR>", "Symbols" },
+        ["\\U"] = { "<cmd>UndotreeToggle<CR>", "Undotree" },
+        ["\\S"] = {
+            name = "+Sourcetrail",
+            r = { "<cmd>SourcetrailRefresh<CR>", "Start/refresh connection" },
+            a = { "<cmd>SourcetrailActivateToken<CR>", "Activate current token" },
+        },
+    })
 
     -- Fugitive provides a lightweight alternative to running git commands with
     -- `:!git …`, with better output handling and nice buffer integration where
