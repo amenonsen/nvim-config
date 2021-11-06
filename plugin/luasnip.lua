@@ -55,7 +55,9 @@ ls.snippets = {
 
         s({ trig = "au", dscr = "Link to selected URL" }, {
             t("<a href=\""),
-            f(function (args) return string.gsub(args[1].env.TM_SELECTED_TEXT[1], "\n", "") end, {}),
+            f(function (_, snip)
+                return string.gsub(snip.env.TM_SELECTED_TEXT[1] or "", "\n", "")
+            end, {}),
             t("\">"), i(1),
             t("</a>"), i(0),
         }),
@@ -63,7 +65,9 @@ ls.snippets = {
         s({ trig = "at", dscr = "Link from selected text" }, {
             t("<a href=\""), i(1),
             t("\">"), i(2),
-            f(function (args) return string.gsub(args[1].env.TM_SELECTED_TEXT[1], "\n*$", "") end, {}),
+            f(function (_, snip)
+                return string.gsub(snip.env.TM_SELECTED_TEXT[1] or "", "\n*$", "")
+            end, {}),
             t("</a>"), i(0),
         }),
 
