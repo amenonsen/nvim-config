@@ -15,6 +15,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
 set updatetime=1000 timeoutlen=1000
 set cursorline signcolumn=yes:1
 set completeopt=menu,menuone,noselect
+set foldmethod=syntax
 
 " Neovim doesn't support clipboard=autoselect; the best we can do is to
 " make mouse selections yank into "* when you click+drag+release. See
