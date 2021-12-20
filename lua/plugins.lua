@@ -164,7 +164,7 @@ local packer_startup = function(use)
         config = function()
             local nls = require "null-ls"
 
-            nls.config({
+            nls.setup({
                 debounce = 250,
                 sources = {
                     nls.builtins.formatting.black,
@@ -173,7 +173,6 @@ local packer_startup = function(use)
                     })
                 }
             })
-            require("lspconfig")["null-ls"].setup({})
         end,
     }
 
