@@ -681,7 +681,7 @@ local packer_startup = function(use)
     -- Lightweight statusbar configuration plugin and (optional) icons to use
     -- in the statusbar.
     use {
-        'shadmansaleh/lualine.nvim',
+        'nvim-lualine/lualine.nvim',
         requires = {
             'kyazdani42/nvim-web-devicons',
         },
