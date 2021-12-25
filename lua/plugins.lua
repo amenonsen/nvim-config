@@ -550,7 +550,7 @@ local packer_startup = function(use)
     -- support for the Debug Adapter Protocol (and requires an adapter
     -- per language to be debugged).
     use {
-        'mfussenegger/nvim-dap', ft = { 'python' },
+        'mfussenegger/nvim-dap', cmd = "DAP",
         config = function()
             local dap = require('dap')
             local repl = require('dap.repl')
@@ -646,10 +646,9 @@ local packer_startup = function(use)
     }
 
     -- Integrates with vim-test and nvim-dap to run tests.
-    use { 'vim-test/vim-test', ft = { 'python' } }
+    use { 'vim-test/vim-test', cmd = "Ultest" }
     use {
         "rcarriga/vim-ultest", after = { 'vim-test' },
-        run = ":UpdateRemotePlugins",
         config = function()
             require("ultest").setup({
                 builders = {
