@@ -66,7 +66,7 @@ local packer_startup = function(use)
                         "List all diagnostics"
                     },
                     ["<leader>e"] = {
-                        "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",
+                        "<cmd>lua vim.diagnostic.open_float()<CR>",
                         "Show line diagnostics"
                     },
                     ["FF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
@@ -148,7 +148,7 @@ local packer_startup = function(use)
             vim.cmd [[
                 augroup lsp
                     autocmd!
-                    autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+                    autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float({focusable=false})
                 augroup end
             ]]
         end
