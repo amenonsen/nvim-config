@@ -94,4 +94,5 @@ augroup vimrc
     autocmd FileType mail nnoremap <buffer> TC ddpcwCck0cwTo0
 
     autocmd FileType html,xml setlocal nosmartindent indentexpr= indentkeys= sw=2 ts=2 sts=2 et
+    autocmd FileType terraform setlocal nosmartindent indentexpr= indentkeys= sw=2 ts=2 sts=2 et
 augroup END
