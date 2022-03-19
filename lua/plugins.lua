@@ -828,6 +828,13 @@ local packer_startup = function(use)
             require('diffview').setup()
         end
     }
+
+    use {
+        'oberblastmeister/neuron.nvim', branch = "unstable", keys = "gz",
+        config = function()
+            require('neuron').setup()
+        end
+    }
 end
 
 local packer_config = {
