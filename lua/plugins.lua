@@ -835,6 +835,8 @@ local packer_startup = function(use)
             require('neuron').setup()
         end
     }
+
+    use 'gpanders/editorconfig.nvim'
 end
 
 local packer_config = {
