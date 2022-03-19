@@ -810,6 +810,24 @@ local packer_startup = function(use)
             })
         end
     }
+
+    use {
+        'TimUntersberger/Neogit', cmd = "Neogit",
+        config = function()
+            require('neogit').setup({
+                integrations = {
+                    diffview = true
+                }
+            })
+        end
+    }
+
+    use {
+        'sindrets/diffview.nvim',
+        config = function()
+            require('diffview').setup()
+        end
+    }
 end
 
 local packer_config = {
