@@ -211,7 +211,16 @@ local packer_startup = function(use)
             }
 
             require('nvim-treesitter.configs').setup({
-                ensure_installed = "maintained",
+                ensure_installed = {
+                    "bash", "c", "clojure", "cmake", "comment", "commonlisp",
+                    "cpp", "css", "dockerfile", "dot", "fennel", "go", "gomod",
+                    "haskell", "html", "http", "java", "javascript", "jsdoc",
+                    "json", "json5", "jsonc", "julia", "kotlin", "latex", "llvm",
+                    "lua", "make", "markdown", "ninja", "nix", "norg", "perl",
+                    "php", "python", "r", "regex", "rst", "ruby", "rust", "scala",
+                    "scheme", "scss", "svelte", "tlaplus", "toml", "typescript",
+                    "vim", "vue", "yaml"
+                },
                 context_commentstring = {
                     enable = true,
                     enable_autocmd = false,
