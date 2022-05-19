@@ -400,12 +400,13 @@ local packer_startup = function(use)
                         luasnip.lsp_expand(args.body)
                     end
                 },
-                sources = {
+                sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
+                }, {
                     { name = 'buffer' },
-                },
-                mapping = {
+                }),
+                mapping = cmp.mapping.preset.insert({
                     ['<C-p>'] = cmp.mapping.select_prev_item(),
                     ['<C-n>'] = cmp.mapping.select_next_item(),
                     ['<C-Space>'] = cmp.mapping.complete(),
@@ -420,8 +421,8 @@ local packer_startup = function(use)
                         select = true,
                     }),
                     ['<Tab>'] = cmp.mapping(function(fallback)
-                        if vim.fn.pumvisible() == 1 then
-                            vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+                        if cmp.visible() then
+                            cmp.select_next_item()
                         elseif luasnip.jumpable(1) then
                             vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-next', true, true, true), '')
                         else
@@ -429,15 +430,15 @@ local packer_startup = function(use)
                         end
                     end, { 'i', 's' }),
                     ['<S-Tab>'] = cmp.mapping(function(fallback)
-                        if vim.fn.pumvisible() == 1 then
-                            vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
+                        if cmp.visible() then
+                            cmp.select_prev_item()
                         elseif luasnip.jumpable(-1) then
                             vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
                         else
                             fallback()
                         end
                     end, { 'i', 's' }),
-                },
+                }),
             })
 
             vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
