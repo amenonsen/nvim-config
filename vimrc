@@ -57,6 +57,7 @@ digraph RU 8377 " ₹
 
 map ' `
 
+let g:ultest_deprecation_notice = 0
 let test#python#pytest#file_pattern = '\.py$'
 
 filetype plugin indent on
