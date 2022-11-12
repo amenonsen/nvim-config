@@ -648,36 +648,29 @@ local packer_startup = function(use)
     }
 
     -- Integrates with vim-test and nvim-dap to run tests.
-    use { 'vim-test/vim-test', cmd = "Ultest" }
+    use { 'vim-test/vim-test', ft = { "python" } }
     use {
-        "rcarriga/vim-ultest", after = { 'vim-test' },
-        config = function()
-            require("ultest").setup({
-                builders = {
-                    ['python#pytest'] = function (cmd)
-                        local non_modules = {'python', 'pipenv', 'poetry'}
-                        local module_index = 1
-                        if vim.tbl_contains(non_modules, cmd[1]) then
-                            module_index = 3
-                        end
-                        local module = cmd[module_index]
-                        local args = vim.list_slice(cmd, module_index + 1)
-                        return {
-                            dap = {
-                                type = 'python',
-                                request = 'launch',
-                                module = module,
-                                args = args
-                            }
-                        }
-                    end
-                }
-            })
-            require('which-key').register({
-                ["[t"] = { "<Plug>(ultest-prev-fail)", "Prev test failure" },
-                ["]t"] = { "<Plug>(ultest-next-fail)", "Next test failure" },
-            })
-        end
+      "nvim-neotest/neotest", after = { 'vim-test' },
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "nvim-neotest/neotest-python",
+        "nvim-neotest/neotest-plenary",
+        "nvim-neotest/neotest-vim-test",
+      },
+      config = function()
+          require("neotest").setup({
+            adapters = {
+                require("neotest-python")({
+                    dap = { justMyCode = false },
+                }),
+                require("neotest-plenary"),
+                require("neotest-vim-test")({
+                    ignore_file_types = { "python", "vim", "lua" },
+                })
+            },
+          })
+      end
     }
 
     -- Lightweight statusbar configuration plugin and (optional) icons to use

@@ -57,7 +57,6 @@ digraph RU 8377 " ₹
 
 map ' `
 
-let g:ultest_deprecation_notice = 0
 let test#python#pytest#file_pattern = '\.py$'
 
 filetype plugin indent on
@@ -71,8 +70,6 @@ augroup vimrc
 
     " Run PackerCompile whenever lua/plugins.lua is saved
     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-
-    autocmd User PackerComplete exe "PackerLoad vim-test vim-ultest" | silent UpdateRemotePlugins
 
     " Restore prior cursor (line) position when reopening a file.
     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
