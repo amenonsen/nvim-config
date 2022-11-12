@@ -3,7 +3,7 @@
 
 let mapleader = " "
 
-set nocp ai hidden ruler showcmd terse writeany autowrite smarttab expandtab
+set nocp ai hidden ruler showcmd shortmess+=s writeany autowrite smarttab expandtab
 set incsearch nohlsearch ignorecase smartcase nofoldenable nojs noshowmatch
 set title titlestring= ttyfast vb t_Co=256 t_ti= t_te= t_vb= scrolloff=5
 set tw=72 bs=1 history=1000 report=1 tags=tags background=dark t_Co=256
