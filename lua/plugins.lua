@@ -18,6 +18,10 @@ local packer_startup = function(use)
     -- quotes, open/close <tags>, etc. (e.g., cs"', ysiw")
     use 'tpope/vim-surround'
 
+    -- Define bracketing constructs in different languages (e.g., bash's
+    -- do…done) to extend vim-closer's actions.
+    use 'tpope/vim-endwise'
+
     -- Conservatively insert matching ending bracket(s) only on <CR>.
     use 'rstacruz/vim-closer'
 
