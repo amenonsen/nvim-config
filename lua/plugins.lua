@@ -62,21 +62,22 @@ local packer_startup = function(use)
                     ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition" },
                     ["gr"] = { "<cmd>lua vim.lsp.buf.references()<CR>", "List references" },
                     ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
+                    ["gI"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation" },
                     ["<C-k>"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
-                    ["[e"] = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", "Prev diagnostic" },
-                    ["]e"] = { "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Next diagnostic" },
+                    ["[e"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Prev diagnostic" },
+                    ["]e"] = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Next diagnostic" },
                     ["<leader>q"] = {
-                        "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",
+                        "<cmd>lua vim.diagnostic.set_loclist()<CR>",
                         "List all diagnostics"
                     },
                     ["<leader>e"] = {
                         "<cmd>lua vim.diagnostic.open_float()<CR>",
                         "Show line diagnostics"
                     },
-                    ["FF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
+                    ["FF"] = { "<cmd>lua vim.lsp.buf.format({ async=true })<CR>", "Format code" },
                     ["<leader>D"] = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition" },
                     ["<leader>rn"] = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
-                    ["<leader>ca"] = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action" },
+                    ["<leader>ca"] = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code action" },
                     ["\\W"] = {
                         name = "+Workspaces",
                         l = {
@@ -95,7 +96,7 @@ local packer_startup = function(use)
                 }, { buffer = bufnr })
 
                 require('which-key').register({
-                    ["FF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
+                    ["FF"] = { "<cmd>lua vim.lsp.buf.format({ async=true })<CR>", "Format code" },
                     ["<leader>ca"] = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action" },
                 }, { mode = "v", buffer = bufnr })
             end
