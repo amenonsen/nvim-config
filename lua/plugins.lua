@@ -201,7 +201,6 @@ local packer_startup = function(use)
         -- (though I'm not sure if it's really needed).
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
-            'JoosepAlviste/nvim-ts-context-commentstring',
             'nvim-treesitter/playground',
         },
         config = function()
@@ -217,10 +216,6 @@ local packer_startup = function(use)
                     "php", "python", "r", "regex", "rst", "ruby", "rust", "scala",
                     "scheme", "scss", "svelte", "tlaplus", "toml", "typescript",
                     "vim", "vue", "yaml"
-                },
-                context_commentstring = {
-                    enable = true,
-                    enable_autocmd = false,
                 },
                 highlight = {
                     enable = true,
@@ -298,17 +293,11 @@ local packer_startup = function(use)
     -- Defines gcc/gc{motion}/gC{motion} mappings to toggle comments on the
     -- current line or selected lines based on the 'commentstring' setting.
     use {
-        'b3nj5m1n/kommentary',
+        'numToStr/Comment.nvim',
         config = function()
-            require('kommentary.config').configure_language({"default", "html", "vim"}, {
-                ignore_whitespace = false,
-                use_consistent_indentation = true,
-                single_line_comment_string = 'auto',
-                multi_line_comment_strings = 'auto',
-                hook_function = function()
-                    require('ts_context_commentstring.internal').update_commentstring()
-                end
-            })
+            require('Comment').setup()
+            local ft = require('Comment.ft')
+            ft.set('c', '/*%s*/')
         end
     }
 
