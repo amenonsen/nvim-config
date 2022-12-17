@@ -71,7 +71,7 @@ local packer_startup = function(use)
                         "List all diagnostics"
                     },
                     ["<leader>e"] = {
-                        "<cmd>lua vim.diagnostic.open_float()<CR>",
+                        "<cmd>lua vim.diagnostic.open_float({focusable=false})<CR>",
                         "Show line diagnostics"
                     },
                     ["FF"] = { "<cmd>lua vim.lsp.buf.format({ async=true })<CR>", "Format code" },
