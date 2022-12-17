@@ -295,7 +295,14 @@ local packer_startup = function(use)
     use {
         'numToStr/Comment.nvim',
         config = function()
-            require('Comment').setup()
+            require('Comment').setup({
+                -- Make sure the VISUAL mode mappings are the same as
+                -- the NORMAL mode ones.
+                opleader = {
+                    line = 'gcc',
+                    block = 'gbc',
+                },
+            })
             local ft = require('Comment.ft')
             ft.set('c', '/*%s*/')
         end
