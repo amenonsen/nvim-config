@@ -359,12 +359,11 @@ local packer_startup = function(use)
         end
     }
 
-    -- Adds support to Telescope for https://github.com/jhawthorn/fzy (an
-    -- alternative to fzf), which needs to be installed separately.
+    -- Adds support to Telescope for fzf filename matching syntax.
     use {
-        'nvim-telescope/telescope-fzy-native.nvim',
+        'nvim-telescope/telescope-fzf-native.nvim', run = 'make',
         config = function()
-            require('telescope').load_extension('fzy_native')
+            require('telescope').load_extension('fzf')
         end
     }
 
