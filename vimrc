@@ -31,6 +31,15 @@ if has('termguicolors')
   set termguicolors
 endif
 
+set guifont=SauceCodePro\ Nerd\ Font\ Mono:h13
+
+if exists("g:neovide")
+    let g:neovide_fullscreen = v:true
+    let g:neovide_cursor_animation_length = 0
+    let g:neovide_cursor_trail_size = 0
+    let g:neovide_cursor_vfx_mode = ""
+endif
+
 if executable("rg")
     set grepprg=rg\ --vimgrep
 endif
