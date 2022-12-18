@@ -171,6 +171,7 @@ local packer_startup = function(use)
                 debounce = 250,
                 sources = {
                     nls.builtins.formatting.black,
+                    nls.builtins.diagnostics.yamllint,
                     nls.builtins.code_actions.gitsigns,
                     nls.builtins.diagnostics.shellcheck.with({
                         diagnostics_format = "[#{c}] #{m} (#{s})"
