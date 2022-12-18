@@ -233,6 +233,9 @@ local packer_startup = function(use)
                         scope_incremental = "grc",
                     }
                 },
+                indent = {
+                    enable = true,
+                },
                 textobjects = {
                     select = {
                         enable = true,
