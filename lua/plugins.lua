@@ -406,7 +406,6 @@ local packer_startup = function(use)
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
-                    { name = 'neorg' },
                 }, {
                     { name = 'buffer' },
                 }),
@@ -886,30 +885,6 @@ local packer_startup = function(use)
         'oberblastmeister/neuron.nvim', branch = "unstable", keys = "gz",
         config = function()
             require('neuron').setup()
-        end
-    }
-
-    use {
-        "nvim-neorg/neorg", ft = "norg",
-        requires = {
-            "nvim-lua/plenary.nvim",
-            "nvim-neorg/neorg-telescope",
-        },
-        after = { "nvim-treesitter", "telescope.nvim" },
-        run = ":Neorg sync-parsers",
-        config = function()
-            require('neorg').setup({
-                load = {
-                    ["core.defaults"] = {},
-                    ["core.norg.concealer"] = {},
-                    ["core.norg.completion"] = {
-                        config = {
-                            engine = "nvim-cmp"
-                        }
-                    },
-                    ["core.integrations.telescope"] = {}
-                }
-            })
         end
     }
 
