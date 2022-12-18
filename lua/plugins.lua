@@ -571,6 +571,14 @@ local packer_startup = function(use)
         end
     }
 
+    use {
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = function()
+            require("trouble").setup()
+        end
+    }
+
     require('which-key').register({
         ["[c"] = { "Prev hunk" },
         ["]c"] = { "Next hunk" },
