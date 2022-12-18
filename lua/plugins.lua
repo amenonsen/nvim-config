@@ -409,6 +409,7 @@ local packer_startup = function(use)
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
+                    { name = 'nvim_lsp_signature_help' },
                 }, {
                     { name = 'buffer' },
                 }),
@@ -457,6 +458,7 @@ local packer_startup = function(use)
         { 'saadparwaiz1/cmp_luasnip' },
         { 'hrsh7th/cmp-nvim-lsp' },
         { 'hrsh7th/cmp-buffer' },
+        { 'hrsh7th/cmp-nvim-lsp-signature-help' },
     }
 
     -- Makes it easier to input and identify Unicode characters and
