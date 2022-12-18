@@ -322,15 +322,18 @@ local packer_startup = function(use)
         },
         config = function ()
             local telescope = require('telescope')
+            local trouble = require("trouble.providers.telescope")
             telescope.setup({
                 defaults = {
                     mappings = {
                         i = {
                             ["<esc>"] = "close",
                             ["<C-q>"] = "close",
+                            ["<C-t>"] = trouble.open_with_trouble,
                         },
                         n = {
                             ["q"] = "close",
+                            ["<C-t>"] = trouble.open_with_trouble,
                         },
                     },
                 },
