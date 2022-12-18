@@ -338,6 +338,13 @@ local packer_startup = function(use)
                             i = { ['<C-d>'] = "delete_buffer" },
                         }
                     },
+                },
+                extensions = {
+                    repo = {
+                        settings = {
+                            auto_lcd = true
+                        }
+                    }
                 }
             })
             require('which-key').register({
@@ -364,6 +371,13 @@ local packer_startup = function(use)
         'nvim-telescope/telescope-fzf-native.nvim', run = 'make',
         config = function()
             require('telescope').load_extension('fzf')
+        end
+    }
+
+    use {
+        'cljoly/telescope-repo.nvim',
+        config = function()
+            require('telescope').load_extension('repo')
         end
     }
 
