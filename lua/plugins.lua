@@ -171,7 +171,6 @@ local packer_startup = function(use)
                 debounce = 250,
                 sources = {
                     nls.builtins.formatting.black,
-                    nls.builtins.diagnostics.yamllint,
                     nls.builtins.diagnostics.shellcheck.with({
                         diagnostics_format = "[#{c}] #{m} (#{s})"
                     })
@@ -231,9 +230,6 @@ local packer_startup = function(use)
                         node_decremental = "<BS>",
                         scope_incremental = "grc",
                     }
-                },
-                indent = {
-                    enable = true,
                 },
                 textobjects = {
                     select = {
