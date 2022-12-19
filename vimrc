@@ -31,7 +31,7 @@ if has('termguicolors')
   set termguicolors
 endif
 
-set guifont=SauceCodePro\ Nerd\ Font\ Mono:h13
+set guifont=SauceCodePro\ Nerd\ Font\ Mono\ Medium:h12
 
 if exists("g:neovide")
     let g:neovide_fullscreen = v:true
