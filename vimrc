@@ -31,7 +31,7 @@ if has('termguicolors')
   set termguicolors
 endif
 
-set guifont=SauceCodePro\ Nerd\ Font\ Mono\ Medium:h12
+set guifont=SauceCodePro\ Nerd\ Font\ Mono:h11
 
 if exists("g:neovide")
     let g:neovide_cursor_animation_length = 0
