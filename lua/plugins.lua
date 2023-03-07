@@ -57,6 +57,8 @@ local packer_startup = function(use)
 
                 buf_setopt('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
+                vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
+
                 require('which-key').register({
                     ["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover text" },
                     ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition" },
