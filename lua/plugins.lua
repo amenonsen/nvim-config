@@ -98,7 +98,7 @@ local packer_startup = function(use)
                 }, { buffer = bufnr })
 
                 require('which-key').register({
-                    ["FF"] = { "<cmd>lua vim.lsp.buf.format({ async=true })<CR>", "Format code" },
+                    ["FF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
                     ["<leader>ca"] = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action" },
                 }, { mode = "v", buffer = bufnr })
             end
@@ -469,12 +469,6 @@ local packer_startup = function(use)
         'simrat39/symbols-outline.nvim', cmd = "SymbolsOutline"
     }
 
-    -- Unlike NERDTree and NvimTree, Rnvimr uses RPC to communicate with
-    -- Ranger, thus inheriting all of its file management functionality.
-    use {
-        'kevinhwang91/rnvimr', cmd = "RnvimrToggle"
-    }
-
     -- Displays an interactive tree of changes to undo
     use {
         'mbbill/undotree', cmd = "UndotreeToggle"
@@ -497,7 +491,7 @@ local packer_startup = function(use)
 
     require('which-key').register({
         ga = { "<Plug>(UnicodeGA)", "Identify character" },
-        ["\\R"] = { "<cmd>RnvimrToggle<CR>", "Ranger" },
+        ["\\R"] = { "<cmd>NvimTreeToggle<CR>", "NvimTree" },
         ["\\M"] = { "<cmd>SymbolsOutline<CR>", "Symbols" },
         ["\\U"] = { "<cmd>UndotreeToggle<CR>", "Undotree" },
         ["\\S"] = {
@@ -889,6 +883,19 @@ local packer_startup = function(use)
     }
 
     use 'gpanders/editorconfig.nvim'
+
+    use {
+     "kyazdani42/nvim-tree.lua",
+     requires = {
+       "kyazdani42/nvim-web-devicons",
+     },
+     config = function()
+       require("nvim-tree").setup({
+           disable_netrw = true,
+           hijack_netrw = true,
+       })
+     end,
+    }
 end
 
 local packer_config = {
