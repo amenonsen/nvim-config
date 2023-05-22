@@ -351,6 +351,7 @@ local packer_startup = function(use)
                     "Find files",
                 },
                 ["<C-b>"] = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "Buffers" },
+                ["<C-S-B>"] = { "<cmd>lua require('telescope.builtin').git_branches()<CR>", "Git branches" },
                 ["<C-g>"] = {
                     "<cmd>lua require('telescope.builtin').live_grep({sorter=require('telescope.sorters').empty()})<CR>",
                     "Live grep"
