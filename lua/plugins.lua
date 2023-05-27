@@ -343,6 +343,13 @@ local packer_startup = function(use)
                             i = { ['<C-d>'] = "delete_buffer" },
                         }
                     },
+                },
+                extensions = {
+                    repo = {
+                        settings = {
+                            auto_lcd = true,
+                        }
+                    }
                 }
             })
             require('which-key').register({
@@ -352,6 +359,7 @@ local packer_startup = function(use)
                 },
                 ["<C-b>"] = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "Buffers" },
                 ["<C-S-B>"] = { "<cmd>lua require('telescope.builtin').git_branches()<CR>", "Git branches" },
+                ["<C-l>"] = { "<cmd>lua require('telescope').extensions.repo.cached_list({file_ignore_patterns={'/%.cache/', '/%.cargo/'}})<CR>", "Repositories" },
                 ["<C-g>"] = {
                     "<cmd>lua require('telescope.builtin').live_grep({sorter=require('telescope.sorters').empty()})<CR>",
                     "Live grep"
@@ -370,6 +378,16 @@ local packer_startup = function(use)
         'nvim-telescope/telescope-fzf-native.nvim', run = 'make',
         config = function()
             require('telescope').load_extension('fzf')
+        end
+    }
+
+    use {
+        'cljoly/telescope-repo.nvim',
+        requires = {
+            'airblade/vim-rooter',
+        },
+        config = function()
+            require('telescope').load_extension('repo')
         end
     }
 

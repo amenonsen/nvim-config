@@ -34,6 +34,8 @@ endif
 set guifont=SauceCodePro\ Nerd\ Font\ Mono:h11
 
 let g:pyindent_disable_parentheses_indenting = 1
+let g:rooter_patterns = ['.git']
+let g:rooter_buftypes = ['']
 
 if exists("g:neovide")
     let g:neovide_cursor_animation_length = 0
