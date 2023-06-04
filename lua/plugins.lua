@@ -510,7 +510,7 @@ local packer_startup = function(use)
 
     require('which-key').register({
         ga = { "<Plug>(UnicodeGA)", "Identify character" },
-        ["\\R"] = { "<cmd>NvimTreeToggle<CR>", "NvimTree" },
+        ["\\R"] = { "<cmd>Neotree reveal<CR>", "NeoTree" },
         ["\\M"] = { "<cmd>SymbolsOutline<CR>", "Symbols" },
         ["\\U"] = { "<cmd>UndotreeToggle<CR>", "Undotree" },
         ["\\S"] = {
@@ -904,16 +904,13 @@ local packer_startup = function(use)
     use 'gpanders/editorconfig.nvim'
 
     use {
-     "kyazdani42/nvim-tree.lua",
-     requires = {
-       "kyazdani42/nvim-web-devicons",
-     },
-     config = function()
-       require("nvim-tree").setup({
-           disable_netrw = true,
-           hijack_netrw = true,
-       })
-     end,
+      "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = {
+          "nvim-lua/plenary.nvim",
+          "nvim-tree/nvim-web-devicons",
+          "MunifTanjim/nui.nvim",
+        }
     }
 end
 
