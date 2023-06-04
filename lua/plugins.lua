@@ -359,7 +359,7 @@ local packer_startup = function(use)
                 },
                 ["<C-b>"] = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "Buffers" },
                 ["<C-S-B>"] = { "<cmd>lua require('telescope.builtin').git_branches()<CR>", "Git branches" },
-                ["<C-l>"] = { "<cmd>lua require('telescope').extensions.repo.cached_list({file_ignore_patterns={'/%.cache/', '/%.cargo/'}})<CR>", "Repositories" },
+                ["<C-l>"] = { "<cmd>lua require('telescope').extensions.repo.cached_list({file_ignore_patterns={'/%.cache/', '/%.cargo/', '/.local/'}})<CR>", "Repositories" },
                 ["<C-g>"] = {
                     "<cmd>lua require('telescope.builtin').live_grep({sorter=require('telescope.sorters').empty()})<CR>",
                     "Live grep"
