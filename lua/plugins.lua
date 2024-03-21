@@ -902,7 +902,6 @@ local packer_startup = function(use)
         end
     }
 
-    use 'gpanders/editorconfig.nvim'
 
     use {
       "nvim-neo-tree/neo-tree.nvim",
