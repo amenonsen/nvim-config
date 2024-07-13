@@ -362,6 +362,7 @@ local packer_startup = function(use)
                 ["<C-b>"] = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "Buffers" },
                 ["<C-S-B>"] = { "<cmd>lua require('telescope.builtin').git_branches()<CR>", "Git branches" },
                 ["<C-l>"] = { "<cmd>lua require('telescope').extensions.repo.cached_list({file_ignore_patterns={'/%.cache/', '/%.cargo/', '/.local/'}})<CR>", "Repositories" },
+                ["<A-t>"] = { "<cmd>lua require('telescope-tabs').list_tabs()<CR>", "Tabs" },
                 ["<C-g>"] = {
                     "<cmd>lua require('telescope.builtin').live_grep({sorter=require('telescope.sorters').empty()})<CR>",
                     "Live grep"
@@ -904,15 +905,25 @@ local packer_startup = function(use)
         end
     }
 
+    use {
+        "kyazdani42/nvim-tree.lua",
+        requires = {
+            "kyazdani42/nvim-web-devicons",
+        },
+        config = function()
+            require("nvim-tree").setup({
+                disable_netrw = true,
+                hijack_netrw = true,
+            })
+        end,
+    }
 
     use {
-      "nvim-neo-tree/neo-tree.nvim",
-        branch = "v2.x",
-        requires = {
-          "nvim-lua/plenary.nvim",
-          "nvim-tree/nvim-web-devicons",
-          "MunifTanjim/nui.nvim",
-        }
+        'LukasPietzschmann/telescope-tabs',
+        requires = { 'nvim-telescope/telescope.nvim' },
+        config = function()
+            require('telescope-tabs').setup()
+        end
     }
 end
 
