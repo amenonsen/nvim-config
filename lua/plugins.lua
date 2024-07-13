@@ -57,47 +57,30 @@ local packer_startup = function(use)
 
                 buf_setopt('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-                require('which-key').register({
-                    ["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Hover text" },
-                    ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto definition" },
-                    ["gr"] = { "<cmd>lua vim.lsp.buf.references()<CR>", "List references" },
-                    ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
-                    ["gI"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation" },
-                    ["<C-k>"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
-                    ["[e"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Prev diagnostic" },
-                    ["]e"] = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Next diagnostic" },
-                    ["<leader>q"] = {
-                        "<cmd>lua vim.diagnostic.set_loclist()<CR>",
-                        "List all diagnostics"
-                    },
-                    ["<leader>e"] = {
-                        "<cmd>lua vim.diagnostic.open_float({focusable=false})<CR>",
-                        "Show line diagnostics"
-                    },
-                    ["FF"] = { "<cmd>lua vim.lsp.buf.format({ async=true })<CR>", "Format code" },
-                    ["<leader>D"] = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition" },
-                    ["<leader>rn"] = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
-                    ["<leader>ca"] = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code action" },
-                    ["\\W"] = {
-                        name = "+Workspaces",
-                        l = {
-                            "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-                            "List workspace directories"
-                        },
-                        a = {
-                            "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",
-                            "Add workspace directory"
-                        },
-                        r = {
-                            "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",
-                            "Remove workspace directory"
-                        },
-                    },
+                require('which-key').add({
+                    { "K", "<cmd>lua vim.lsp.buf.hover()<CR>", desc = "Hover text" },
+                    { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", desc = "Goto definition" },
+                    { "gr", "<cmd>lua vim.lsp.buf.references()<CR>", desc = "List references" },
+                    { "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", desc = "Goto declaration" },
+                    { "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", desc = "Goto implementation" },
+                    { "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", desc = "Signature help" },
+                    { "[e", "<cmd>lua vim.diagnostic.goto_prev()<CR>", desc = "Prev diagnostic" },
+                    { ",e", "<cmd>lua vim.diagnostic.goto_next()<CR>", desc = "Next diagnostic" },
+                    { "<leader>q", "<cmd>lua vim.diagnostic.set_loclist()<CR>", desc = "List all diagnostics" },
+                    { "<leader>e", "<cmd>lua vim.diagnostic.open_float({focusable=false})<CR>", desc = "Show line diagnostics" },
+                    { "FF", "<cmd>lua vim.lsp.buf.format({ async=true })<CR>", desc = "Format code" },
+                    { "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", desc = "Type definition" },
+                    { "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", desc = "Rename" },
+                    { "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", desc = "Code action" },
+                    { "\\W", group = "Workspaces" },
+                    { "\\Wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", desc = "List workspace directories" },
+                    { "\\Wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", desc = "Add workspace directory" },
+                    { "\\Wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", desc = "Remove workspace directory" },
                 }, { buffer = bufnr })
 
-                require('which-key').register({
-                    ["FF"] = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format code" },
-                    ["<leader>ca"] = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code action" },
+                require('which-key').add({
+                    { "FF", "<cmd>lua vim.lsp.buf.formatting()<CR>", desc = "Format code" },
+                    { "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", desc = "Code action" },
                 }, { mode = "v", buffer = bufnr })
             end
 
@@ -354,24 +337,16 @@ local packer_startup = function(use)
                     }
                 }
             })
-            require('which-key').register({
-                ["<C-f>"] = {
-                    "<cmd>lua require('telescope-files').project_files()<CR>",
-                    "Find files",
-                },
-                ["<C-b>"] = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "Buffers" },
-                ["<C-S-B>"] = { "<cmd>lua require('telescope.builtin').git_branches()<CR>", "Git branches" },
-                ["<C-l>"] = { "<cmd>lua require('telescope').extensions.repo.cached_list({file_ignore_patterns={'/%.cache/', '/%.cargo/', '/.local/'}})<CR>", "Repositories" },
-                ["<A-t>"] = { "<cmd>lua require('telescope-tabs').list_tabs()<CR>", "Tabs" },
-                ["<C-g>"] = {
-                    "<cmd>lua require('telescope.builtin').live_grep({sorter=require('telescope.sorters').empty()})<CR>",
-                    "Live grep"
-                },
-                ["T"] = {
-                    name = "+Telescope",
-                    ["T"] = { "<cmd>lua require('telescope.builtin').builtin()<CR>", "Builtins" },
-                    h = { "<cmd>lua require('telescope.builtin').help_tags()<CR>", "Help tags" },
-                },
+            require('which-key').add({
+                { "<C-f>", "<cmd>lua require('telescope-files').project_files()<CR>", desc = "Find files" },
+                { "<C-b>", "<cmd>lua require('telescope.builtin').buffers()<CR>", desc = "Buffers" },
+                { "<C-S-B>", "<cmd>lua require('telescope.builtin').git_branches()<CR>", desc = "Git branches" },
+                { "<C-l>", "<cmd>lua require('telescope').extensions.repo.cached_list({file_ignore_patterns={'/%.cache/', '/%.cargo/', '/.local/'}})<CR>", desc = "Repositories" },
+                { "<A-t>", "<cmd>lua require('telescope-tabs').list_tabs()<CR>", desc = "Tabs" },
+                { "<C-g>", "<cmd>lua require('telescope.builtin').live_grep({sorter=require('telescope.sorters').empty()})<CR>", desc = "Live grep" },
+                { "T", group = "Telescope" },
+                { "TT", "<cmd>lua require('telescope.builtin').builtin()<CR>", desc = "Builtins" },
+                { "Th", "<cmd>lua require('telescope.builtin').help_tags()<CR>", desc = "Help tags" },
             })
         end
     }
@@ -511,16 +486,14 @@ local packer_startup = function(use)
         end
     }
 
-    require('which-key').register({
-        ga = { "<Plug>(UnicodeGA)", "Identify character" },
-        ["\\R"] = { "<cmd>Neotree reveal<CR>", "NeoTree" },
-        ["\\M"] = { "<cmd>SymbolsOutline<CR>", "Symbols" },
-        ["\\U"] = { "<cmd>UndotreeToggle<CR>", "Undotree" },
-        ["\\S"] = {
-            name = "+Sourcetrail",
-            r = { "<cmd>SourcetrailRefresh<CR>", "Start/refresh connection" },
-            a = { "<cmd>SourcetrailActivateToken<CR>", "Activate current token" },
-        },
+    require('which-key').add({
+        { "ga", "<Plug>(UnicodeGA)", desc = "Identify character" },
+        { "\\R", "<cmd>Neotree reveal<CR>", desc = "NeoTree" },
+        { "\\M", "<cmd>SymbolsOutline<CR>", desc = "Symbols" },
+        { "\\U", "<cmd>UndotreeToggle<CR>", desc = "Undotree" },
+        { "\\S", group = "Sourcetrail" },
+        { "\\Sa", "<cmd>SourcetrailActivateToken<CR>", desc = "Activate current token" },
+        { "\\Sr", "<cmd>SourcetrailRefresh<CR>", desc = "Start/refresh connection" },
     })
 
     -- Fugitive provides a lightweight alternative to running git commands with
@@ -595,30 +568,26 @@ local packer_startup = function(use)
         end
     }
 
-    require('which-key').register({
-        ["[c"] = { "Prev hunk" },
-        ["]c"] = { "Next hunk" },
-        ["<leader>h"] = {
-            name = "+Hunk",
-            s = { "Stage hunk" },
-            S = { "Stage buffer" },
-            u = { "Unstage hunk" },
-            r = { "Reset hunk" },
-            R = { "Reset buffer" },
-            p = { "Preview hunk" },
-            b = { "Blame line" },
-            d = { "Diff against index" },
-            D = { "Diff against parent" },
-        },
-        ["<leader>tb"] = { "Toggle blame" },
-        ["<leader>td"] = { "Toggle deleted" },
+    require('which-key').add({
+        { "[c", desc = "Prev hunk" },
+        { "]c", desc = "Next hunk" },
+        { "<leader>h", group = "Hunk" },
+        { "<leader>hs", desc = "Stage hunk" },
+        { "<leader>hS", desc = "Stage buffer" },
+        { "<leader>hu", desc = "Unstage hunk" },
+        { "<leader>hr", desc = "Reset hunk" },
+        { "<leader>hR", desc = "Reset buffer" },
+        { "<leader>hp", desc = "Preview hunk" },
+        { "<leader>hb", desc = "Blame line" },
+        { "<leader>hd", desc = "Diff against index" },
+        { "<leader>hD", desc = "Diff against parent" },
+        { "<leader>tb", desc = "Toggle blame" },
+        { "<leader>td", desc = "Toggle deleted" },
     }, { mode = "n" })
-    require('which-key').register({
-        ["<leader>h"] = {
-            name = "+Hunk",
-            s = { "Stage hunk" },
-            r = { "Reset hunk" },
-        },
+    require('which-key').add({
+        { "<leader>h", group = "Hunk" },
+        { "<leader>hs", desc = "Stage hunk" },
+        { "<leader>hr", desc = "Reset hunk" },
     }, { mode = "v" })
 
     -- Supports Python debugging using debugpy and nvim-dap, which adds
@@ -648,15 +617,9 @@ local packer_startup = function(use)
                 },
             })
 
-            require('which-key').register({
-                ["\\B"] = {
-                    "<cmd>lua require('dap').toggle_breakpoint()<CR>",
-                    "DAP: Toggle breakpoint",
-                },
-                ["\\C"] = {
-                    "<cmd>setlocal number<CR><cmd>lua require('dap').continue()<CR>",
-                    "DAP: Continue",
-                },
+            require('which-key').add({
+                { "\\B", "<cmd>lua require('dap').toggle_breakpoint()<CR>", desc = "DAP: Toggle breakpoint" },
+                { "\\C", "<cmd>setlocal number<CR><cmd>lua require('dap').continue()<CR>", desc = "DAP: Continue" },
             })
 
             -- These dap-repl-specific mappings make using the debugger
@@ -703,11 +666,8 @@ local packer_startup = function(use)
         "rcarriga/nvim-dap-ui", after = { 'nvim-dap' },
         config = function()
             require('dapui').setup({})
-            require('which-key').register({
-                ["\\D"] = {
-                    "<cmd>setlocal number<CR><cmd>lua require('dapui').toggle()<CR>",
-                    "DAP: Debugger UI",
-                }
+            require('which-key').add({
+                { "\\D", "<cmd>setlocal number<CR><cmd>lua require('dapui').toggle()<CR>", desc = "DAP: Debugger UI" }
             })
         end
     }
@@ -864,18 +824,10 @@ local packer_startup = function(use)
             require('persistence.config').setup({
                 dir = vim.fn.stdpath('data')..'/sessions/'
             })
-            require('which-key').register({
-                ["\\s"] = {
-                    name = "+Sessions",
-                    ["s"] = {
-                        "<cmd>lua require('persistence').save()<CR>",
-                        "Save session",
-                    },
-                    ["l"] = {
-                        "<cmd>lua require('telescope-sessions').sessions()<CR>",
-                        "Load session",
-                    }
-                }
+            require('which-key').add({
+                { "\\s", group = "Sessions" },
+                { "\\ss", "<cmd>lua require('persistence').save()<CR>", desc = "Save session" },
+                { "\\sl", "<cmd>lua require('telescope-sessions').sessions()<CR>", desc = "Load session" },
             })
         end
     }
