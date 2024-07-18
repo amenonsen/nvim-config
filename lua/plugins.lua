@@ -488,7 +488,7 @@ local packer_startup = function(use)
 
     require('which-key').add({
         { "ga", "<Plug>(UnicodeGA)", desc = "Identify character" },
-        { "\\R", "<cmd>Neotree reveal<CR>", desc = "NeoTree" },
+        { "\\R", "<cmd>Nvimtree toggle<CR>", desc = "NvimTree" },
         { "\\M", "<cmd>SymbolsOutline<CR>", desc = "Symbols" },
         { "\\U", "<cmd>UndotreeToggle<CR>", desc = "Undotree" },
         { "\\S", group = "Sourcetrail" },
