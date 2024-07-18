@@ -851,13 +851,6 @@ local packer_startup = function(use)
     }
 
     use {
-        'oberblastmeister/neuron.nvim', branch = "unstable", keys = "gz",
-        config = function()
-            require('neuron').setup()
-        end
-    }
-
-    use {
         "kyazdani42/nvim-tree.lua",
         requires = {
             "kyazdani42/nvim-web-devicons",
